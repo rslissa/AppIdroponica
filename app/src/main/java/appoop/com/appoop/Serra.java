@@ -3,9 +3,8 @@ package appoop.com.appoop;
 import java.util.Date;
 
 public class Serra {
-    public int id;
     public String serra; //nome della serra
-    public int m2;
+    public String m2;
     public String coltura;
     public String varieta;
     public Date trapianto; //data trapianto piante
@@ -16,14 +15,6 @@ public class Serra {
     public Serra() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getSerra() {
         return serra;
     }
@@ -32,11 +23,11 @@ public class Serra {
         this.serra = serra;
     }
 
-    public int getM2() {
+    public String getM2() {
         return m2;
     }
 
-    public void setM2(int m2) {
+    public void setM2(String m2) {
         this.m2 = m2;
     }
 

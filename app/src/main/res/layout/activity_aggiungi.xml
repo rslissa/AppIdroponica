@@ -144,16 +144,13 @@
                 app:layout_constraintStart_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="@+id/scrollView4" />
 
-            <EditText
-                android:id="@+id/editText_trapianto"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/button_data"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:ems="10"
-                android:inputType="date"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toTopOf="@+id/textView8" />
-     
+                android:onClick="showDatePickerDialog"
+                android:text="inserisci data" />
 
             <TextView
                 android:id="@+id/textView7"

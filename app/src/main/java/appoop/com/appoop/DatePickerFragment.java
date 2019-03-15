@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+
 
 public  class DatePickerFragment extends DialogFragment   implements DatePickerDialog.OnDateSetListener {
 
@@ -28,9 +26,6 @@ public  class DatePickerFragment extends DialogFragment   implements DatePickerD
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        String giorno=Integer.toString (day);
-        String mese=Integer.toString (month);
-        String anno=Integer.toString (year);
         String s=""+day+'/'+month+'/'+year;
         aggiungi.setData(s);
     }

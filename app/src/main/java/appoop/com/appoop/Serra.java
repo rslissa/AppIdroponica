@@ -8,11 +8,22 @@ public class Serra {
     public String coltura;
     public String varieta;
     public Date trapianto; //data trapianto piante
-    public float LOentrata; //litri/ora entrata
-    public float LOsgrondo; //litri/ora uscita
-    public float TargetEC; //salinità
+    public Double LOentrata; //litri/ora entrata
+    public Double LOsgrondo; //litri/ora uscita
+    public Double TargetEC; //salinità
 
     public Serra() {
+    }
+
+    public Serra(String serra, String m2, String coltura, String varieta, Date trapianto, Double LOentrata, Double LOsgrondo, Double targetEC) {
+        this.serra = serra;
+        this.m2 = m2;
+        this.coltura = coltura;
+        this.varieta = varieta;
+        this.trapianto = trapianto;
+        this.LOentrata = LOentrata;
+        this.LOsgrondo = LOsgrondo;
+        TargetEC = targetEC;
     }
 
     public String getSerra() {
@@ -55,27 +66,41 @@ public class Serra {
         this.trapianto = trapianto;
     }
 
-    public float getLOentrata() {
+    public Double getLOentrata() {
         return LOentrata;
     }
 
-    public void setLOentrata(float LOentrata) {
+    public void setLOentrata(Double LOentrata) {
         this.LOentrata = LOentrata;
     }
 
-    public float getLOsgrondo() {
+    public Double getLOsgrondo() {
         return LOsgrondo;
     }
 
-    public void setLOsgrondo(float LOsgrondo) {
+    public void setLOsgrondo(Double LOsgrondo) {
         this.LOsgrondo = LOsgrondo;
     }
 
-    public float getTargetEC() {
+    public Double getTargetEC() {
         return TargetEC;
     }
 
-    public void setTargetEC(float targetEC) {
+    public void setTargetEC(Double targetEC) {
         TargetEC = targetEC;
+    }
+
+    @Override
+    public String toString() {
+        return "Serra{" +
+                "serra='" + serra + '\'' +
+                ", m2='" + m2 + '\'' +
+                ", coltura='" + coltura + '\'' +
+                ", varieta='" + varieta + '\'' +
+                ", trapianto=" + trapianto +
+                ", LOentrata=" + LOentrata +
+                ", LOsgrondo=" + LOsgrondo +
+                ", TargetEC=" + TargetEC +
+                '}';
     }
 }

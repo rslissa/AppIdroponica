@@ -53,7 +53,7 @@
                 app:layout_constraintStart_toStartOf="@+id/textView5" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/editText_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -61,7 +61,7 @@
                 android:layout_marginStart="0dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"
+                android:text="nome serra"
                 app:layout_constraintBottom_toTopOf="@+id/editText7"
                 app:layout_constraintStart_toStartOf="@+id/editText5" />
 
@@ -77,7 +77,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/textView8" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/editText_m2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -85,7 +85,7 @@
                 android:layout_marginStart="0dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"
+                android:text="0"
                 app:layout_constraintStart_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -100,13 +100,13 @@
                 app:layout_constraintStart_toStartOf="@+id/textView8" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/editText3_coltura"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"
+                android:text="non specificata"
                 app:layout_constraintStart_toStartOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
@@ -121,7 +121,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editText" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/editText4_varieta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -129,7 +129,7 @@
                 android:layout_marginTop="0dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name"
+                android:text="non specificata"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -145,7 +145,7 @@
                 app:layout_constraintTop_toTopOf="@+id/scrollView4" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/editText_trapianto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -153,6 +153,7 @@
                 android:inputType="date"
                 app:layout_constraintStart_toStartOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="@+id/textView8" />
+     
 
             <TextView
                 android:id="@+id/textView7"
@@ -164,7 +165,7 @@
                 app:layout_constraintTop_toTopOf="@+id/editText4" />
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/editText_LOin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -183,7 +184,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <EditText
-                android:id="@+id/editText7"
+                android:id="@+id/editText_LOout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -202,7 +203,7 @@
                 app:layout_constraintStart_toStartOf="@+id/editText4" />
 
             <EditText
-                android:id="@+id/editText8"
+                android:id="@+id/editText_EC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
@@ -213,7 +214,7 @@
                 app:layout_constraintStart_toStartOf="@+id/editText7" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/button_crea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="crea nuova serra"

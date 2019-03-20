@@ -1,30 +1,30 @@
 package appoop.com.appoop;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 
 import java.util.Locale;
 
-public class aggiungi extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class aggiungi extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Serra> serre;
     ArrayList<String> nomiSerre;
     Serra serra;
     public static Date data=null;
-
+    Spinner spinner;
     public aggiungi() {
         nomiSerre=new ArrayList<String> ();
         serre=new ArrayList<Serra> ();
@@ -35,23 +35,35 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_aggiungi);
-        final Button button = (Button) findViewById(R.id.button_crea);
-        button.setOnClickListener(this);
+        addListenerOnButtonClick();
+        addListenerOnSpinnerItemSelection ();
 
-
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(this);
-
-
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomiSerre);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
     }
 
+    public void addItemsOnSpinner(){
+
+        nomiSerre.removeAll(Collections.singleton(null));
+
+            spinner =  findViewById(R.id.spinner);
+            System.out.println ("ciao"+nomiSerre.size());
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomiSerre);
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+
+
+    }
+    public void addListenerOnSpinnerItemSelection(){
+        spinner =  findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+
+    }
+
+    public void addListenerOnButtonClick(){
+        final Button button =  findViewById(R.id.button_crea);
+        button.setOnClickListener(this);
+    }
     public void onClick(View v) {
 
         EditText Tnome = findViewById(R.id.editText_nome);
@@ -72,6 +84,7 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         serra.setTargetEC (Double.valueOf (TEC.getText().toString()));
         serre.add (serra);
         nomiSerre.add(serra.getSerra ());
+        addItemsOnSpinner();
         for(Iterator<Serra> i= serre.iterator (); i.hasNext ();){
             Serra s=i.next ();
             System.out.println(s);
@@ -93,18 +106,4 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

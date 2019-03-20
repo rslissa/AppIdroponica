@@ -17,6 +17,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Info">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".Registro">
         <intent-filter>
             <category android:name="android.intent.category.LAUNCHER" />
@@ -28,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

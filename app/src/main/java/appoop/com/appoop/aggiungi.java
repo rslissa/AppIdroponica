@@ -1,9 +1,7 @@
 package appoop.com.appoop;
 
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,20 +12,24 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 
 import java.util.Locale;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class aggiungi extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class aggiungi extends AppCompatActivity implements View.OnClickListener, OnItemSelectedListener {
     ArrayList<Serra> serre;
     ArrayList<String> nomiSerre;
     Serra serra;
     public static Date data=null;
-
+    Spinner spinner;
+    Intent openInfo;
     public aggiungi() {
         nomiSerre=new ArrayList<String> ();
         serre=new ArrayList<Serra> ();
@@ -38,23 +40,34 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_aggiungi);
-        final Button button = (Button) findViewById(R.id.button_crea);
-        button.setOnClickListener(this);
+        addListenerOnButtonClick();
+        addListenerOnSpinnerItemSelection ();
 
-
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(this);
-
-
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomiSerre);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
     }
 
+    public void addItemsOnSpinner(){
+
+        nomiSerre.removeAll(Collections.singleton(null));
+
+            spinner =  findViewById(R.id.spinner);
+            System.out.println ("ciao"+nomiSerre.size());
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomiSerre);
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+
+
+    }
+    public void addListenerOnSpinnerItemSelection(){
+        spinner =  findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener( this);
+    }
+
+    public void addListenerOnButtonClick(){
+        final Button button =  findViewById(R.id.button_crea);
+        button.setOnClickListener(this);
+    }
     public void onClick(View v) {
 
         EditText Tnome = findViewById(R.id.editText_nome);
@@ -74,35 +87,9 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         serra.setLOsgrondo (Double.valueOf (TLOout.getText().toString()));
         serra.setTargetEC (Double.valueOf (TEC.getText().toString()));
 
-        //controllo che il nome sia univoco
- /*       for(Iterator<String> i=nomiSerre.iterator ();i.hasNext ();){
-            String temp=i.next ();
-            if(serra.getSerra ()==temp){
-
-                new AlertDialog.Builder(this)
-                        .setTitle("Delete entry")
-                        .setMessage("è già stata creata una serra con questo nome, cambia nome o elimina la serra precedente")
-
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Continue with delete operation
-                            }
-                        })
-
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            }else{
-
-            }
-
-        }
-*/
         serre.add (serra);
         nomiSerre.add(serra.getSerra ());
+        addItemsOnSpinner();
         for(Iterator<Serra> i= serre.iterator (); i.hasNext ();){
             Serra s=i.next ();
             System.out.println(s);
@@ -124,18 +111,18 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
+        openInfo  = new Intent(aggiungi.this, Info.class);
+        finish();
+      //  openInfo.putExtra("serra",serre.get(pos));
+        startActivity (openInfo);
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> arg0) {
 
     }
+
 }

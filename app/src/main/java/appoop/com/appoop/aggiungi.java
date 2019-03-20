@@ -1,7 +1,7 @@
 package appoop.com.appoop;
 
-import android.annotation.SuppressLint;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -82,6 +82,34 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener 
         serra.setLOentrata (Double.valueOf (TLOin.getText().toString()));
         serra.setLOsgrondo (Double.valueOf (TLOout.getText().toString()));
         serra.setTargetEC (Double.valueOf (TEC.getText().toString()));
+
+        //controllo che il nome sia univoco
+ /*       for(Iterator<String> i=nomiSerre.iterator ();i.hasNext ();){
+            String temp=i.next ();
+            if(serra.getSerra ()==temp){
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Delete entry")
+                        .setMessage("è già stata creata una serra con questo nome, cambia nome o elimina la serra precedente")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }else{
+
+            }
+
+        }
+*/
         serre.add (serra);
         nomiSerre.add(serra.getSerra ());
         addItemsOnSpinner();

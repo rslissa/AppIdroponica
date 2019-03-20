@@ -24,7 +24,6 @@
         android:id="@+id/scrollView4"
         android:layout_width="0dp"
         android:layout_height="580dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +63,7 @@
                 android:inputType="textPersonName"
                 android:text="nome serra"
                 app:layout_constraintBottom_toTopOf="@+id/editText7"
-                app:layout_constraintStart_toStartOf="@+id/editText5" />
+                app:layout_constraintStart_toStartOf="@+id/info_varieta" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -74,7 +73,7 @@
                 android:layout_marginEnd="21dp"
                 android:text="metri quadri"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/editText3"
+                app:layout_constraintBottom_toTopOf="@+id/info_coltura"
                 app:layout_constraintEnd_toEndOf="@+id/textView8" />
 
             <EditText
@@ -109,7 +108,7 @@
                 android:inputType="textPersonName"
                 android:text="non specificata"
                 app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+                app:layout_constraintTop_toBottomOf="@+id/info_m2" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -117,9 +116,9 @@
                 android:layout_height="wrap_content"
                 android:text="varietà"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/editText"
+                app:layout_constraintBottom_toBottomOf="@+id/info_nome"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/editText" />
+                app:layout_constraintTop_toBottomOf="@+id/info_nome" />
 
             <EditText
                 android:id="@+id/editText4_varieta"
@@ -159,8 +158,8 @@
                 android:layout_height="wrap_content"
                 android:text="litri ora entrata"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/editText4"
-                app:layout_constraintTop_toTopOf="@+id/editText4" />
+                app:layout_constraintEnd_toEndOf="@+id/registro_ec"
+                app:layout_constraintTop_toTopOf="@+id/registro_ec" />
 
             <EditText
                 android:id="@+id/editText_LOin"
@@ -171,7 +170,7 @@
                 android:inputType="numberDecimal"
                 android:text="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText4" />
+                app:layout_constraintTop_toBottomOf="@+id/registro_ec" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -190,7 +189,7 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:text="1"
-                app:layout_constraintBottom_toTopOf="@+id/editText4"
+                app:layout_constraintBottom_toTopOf="@+id/registro_ec"
                 app:layout_constraintStart_toStartOf="@+id/textView9" />
 
             <TextView
@@ -199,8 +198,8 @@
                 android:layout_height="wrap_content"
                 android:text="targetEC"
                 android:textSize="18sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/editText4"
-                app:layout_constraintStart_toStartOf="@+id/editText4" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/registro_ec"
+                app:layout_constraintStart_toStartOf="@+id/registro_ec" />
 
             <EditText
                 android:id="@+id/editText_EC"
@@ -232,7 +231,8 @@
         android:layout_width="76dp"
         android:layout_height="32dp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        tools:ignore="MissingConstraints" />
 
 
 </android.support.constraint.ConstraintLayout>

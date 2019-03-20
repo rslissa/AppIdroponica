@@ -1,8 +1,9 @@
 package appoop.com.appoop;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Serra {
+public class Serra implements Serializable {
     public String serra; //nome della serra
     public String m2;
     public String coltura;

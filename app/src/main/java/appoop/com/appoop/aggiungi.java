@@ -115,7 +115,7 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
 
         Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
         openInfo  = new Intent(aggiungi.this, Info.class);
-        finish();
+        //finish();
         openInfo.putExtra("serra",serre.get(pos));
         startActivity (openInfo);
     }

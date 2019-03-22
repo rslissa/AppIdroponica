@@ -8,12 +8,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Registro extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class Registro extends Activity implements View.OnClickListener{
 
     public Date trapianto;
     public double LOentrata;
@@ -35,6 +35,14 @@ public class Registro extends Activity implements View.OnClickListener, AdapterV
         GridView gridView01 = (GridView) findViewById(R.id.reg_dynamic);
         gridView01.setAdapter(adapter);
 
+        gridView01.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> av, View v, int pos,long id) {
+                System.out.println("elemento selezionato");
+            }
+        });
+
         final Button btnHome = (Button) findViewById(R.id.btn_home);
         btnHome.setOnClickListener(this);
 
@@ -45,8 +53,9 @@ public class Registro extends Activity implements View.OnClickListener, AdapterV
                 startActivity(openPage1);
             }
         });
-    }
 
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -55,16 +64,6 @@ public class Registro extends Activity implements View.OnClickListener, AdapterV
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

@@ -1,8 +1,18 @@
 package appoop.com.appoop;
 
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+
+//per passare
 public class Serra implements Serializable {
     public String serra; //nome della serra
     public String m2;
@@ -104,4 +114,22 @@ public class Serra implements Serializable {
                 ", TargetEC=" + TargetEC +
                 '}';
     }
+
+    public String TrapiantoToString(){
+        String pattern = "dd/MM/yyyy";
+        DateFormat df = new SimpleDateFormat (pattern);
+        return(df.format(getTrapianto ()));
+    }
+    public String LOinToString(){
+        return (String.valueOf (getLOentrata ()));
+    }
+    public String LOoutToString(){
+        return (String.valueOf (getLOsgrondo ()));
+    }
+    public String TargetECToString(){
+        return(String.valueOf (getTargetEC ()));
+    }
+
+
+
 }

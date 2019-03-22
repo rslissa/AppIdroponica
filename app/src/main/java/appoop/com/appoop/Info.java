@@ -9,32 +9,40 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 
 
 public class Info extends Activity implements Serializable {
     Serra serra;
-
+    ArrayList<String> nomiSerre;
     public Info() {
-        //serra= (Serra) getIntent ().getSerializableExtra("serra");
-        serra=new Serra("c1","fds","asd","sdfd",null,1.0,1.0,1.0);
+        nomiSerre=new ArrayList ();
     }
 
     protected void onCreate(Bundle savedInstanceState) {
-        //questo pezzo di codice è quello che collega l'activity_info con questa classe java
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        // During initial setup, plug in the details fragment.
+        if (savedInstanceState == null) {
 
+            serra= (Serra) getIntent().getSerializableExtra("serra");
+            nomiSerre.addAll ((ArrayList)getIntent().getSerializableExtra("nomiSerre"));
+        }
+        ClickTastoHome();
+        load();
+    }
+
+    public void ClickTastoHome(){
         final Button btnHome = (Button) findViewById(R.id.button_home);
-
         btnHome.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
-                Intent openPage1 = new Intent(Info.this,aggiungi.class);
-                startActivity(openPage1);
+                Intent openAggiungi = new Intent(Info.this,aggiungi.class);
+                startActivity(openAggiungi);
             }
         });
     }
-
 
     public void load() {
 
@@ -47,14 +55,14 @@ public class Info extends Activity implements Serializable {
         EditText info_uscita = findViewById(R.id.info_uscita);
         EditText info_ec = findViewById(R.id.info_ec);
 
-        info_nome.setText(serra.getSerra().toString());
-        info_m2.setText(serra.getM2().toString());
-        info_coltura.setText(serra.getColtura().toString());
-        info_varieta.setText(serra.getVarieta().toString());
-        info_data.setText(serra.getTrapianto().toString());
-        info_entrata.setText(serra.getLOentrata().toString());
-        info_uscita.setText(serra.getLOsgrondo().toString());
-        info_ec.setText(serra.getTargetEC().toString());
+        info_nome.setText(serra.getSerra());
+        info_m2.setText(serra.getM2());
+        info_coltura.setText(serra.getColtura());
+        info_varieta.setText(serra.getVarieta());
+        info_data.setText(serra.TrapiantoToString());
+        info_entrata.setText(serra.LOinToString());
+        info_uscita.setText(serra.LOoutToString());
+        info_ec.setText(serra.TargetECToString());
 
     }
 

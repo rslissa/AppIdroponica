@@ -183,7 +183,7 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
             openInfo.putExtra("serra",serre.get(pos));
             openInfo.putExtra("nomiSerre",nomiSerre);
             startActivity (openInfo);
-            //no se
+            //no se dio bo
             }
 
 

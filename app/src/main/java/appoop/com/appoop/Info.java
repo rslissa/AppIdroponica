@@ -3,10 +3,15 @@ package appoop.com.appoop;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,6 +33,26 @@ public class Info extends Activity implements Serializable {
 
             serra= (Serra) getIntent().getSerializableExtra("serra");
             nomiSerre.addAll ((ArrayList)getIntent().getSerializableExtra("nomiSerre"));
+
+            BottomNavigationView btnNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+            btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch(item.getItemId()){
+                        case R.id.nav_info:
+                            Toast.makeText(Info.this,"Info page selected", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.nav_reg:
+                            Toast.makeText(Info.this,"Register page selected", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.nav_ana:
+                            Toast.makeText(Info.this,"Analysis page selected", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+
+                    return true;
+                }
+            });
         }
         ClickTastoHome();
         load();

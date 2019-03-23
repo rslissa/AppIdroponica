@@ -114,10 +114,26 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
         Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
-        openInfo  = new Intent(aggiungi.this, Info.class);
-        finish();
-        //openInfo.putExtra("serra",serre.get(pos));
-        startActivity (openInfo);
+
+        if(parent.getItemAtPosition (pos).equals("lista serre")){
+            //do nothing
+        }
+        else{
+            Gson gson = new GsonBuilder ().create();
+            JsonArray JsonSerre = gson.toJsonTree(serre).getAsJsonArray();
+            JsonArray JsonNomiSerre = gson.toJsonTree(nomiSerre).getAsJsonArray();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString ("JsonSerre",JsonSerre.toString ());
+            editor.apply();
+            editor.putString ("JsonNomiSerre",JsonNomiSerre.toString ());
+            editor.apply();
+
+            openInfo  = new Intent(aggiungi.this, Info.class);
+            openInfo.putExtra("serra",serre.get(pos));
+            openInfo.putExtra("nomiSerre",nomiSerre);
+            startActivity (openInfo);
+            //no se
+            }
     }
 
     @Override

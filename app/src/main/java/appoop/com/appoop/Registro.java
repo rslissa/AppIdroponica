@@ -3,6 +3,9 @@ package appoop.com.appoop;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,6 +54,26 @@ public class Registro extends Activity implements View.OnClickListener{
             public void onClick(View arg0) {
                 Intent openPage1 = new Intent(Registro.this,aggiungi.class);
                 startActivity(openPage1);
+            }
+        });
+
+        BottomNavigationView btnNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.nav_info:
+                        Toast.makeText(Registro.this,"Info page selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_reg:
+                        Toast.makeText(Registro.this,"Register page selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_ana:
+                        Toast.makeText(Registro.this,"Analysis page selected", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+                return true;
             }
         });
 

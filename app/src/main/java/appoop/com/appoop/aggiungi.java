@@ -26,7 +26,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,8 +41,8 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
     SharedPreferences preferences;
 
     public aggiungi() {
-        nomiSerre=new ArrayList ();
-        serre=new ArrayList();
+        nomiSerre= new ArrayList<> ( );
+        serre= new ArrayList<> ( );
         serra=new Serra();
     }
 
@@ -70,14 +69,9 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
             serre.add(0,null);
             addItemsOnSpinner();
         }else{
-            if (strJsonNomiSerre != null && strJsonSerre!= null) {
-                    nomiSerre = new Gson().fromJson(strJsonNomiSerre, new TypeToken<List<String>> (){}.getType());
-                    addItemsOnSpinner();
-                    serre = new Gson().fromJson(strJsonSerre, new TypeToken<List<Serra>> (){}.getType());
-
-
-                }
-
+            nomiSerre = new Gson().fromJson(strJsonNomiSerre, new TypeToken<List<String>> (){}.getType());
+            addItemsOnSpinner();
+            serre = new Gson().fromJson(strJsonSerre, new TypeToken<List<Serra>> (){}.getType());
             }
 
 
@@ -129,10 +123,6 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         serre.add (serra);
         nomiSerre.add(serra.getSerra ());
         addItemsOnSpinner();
-        for(Iterator<Serra> i= serre.iterator (); i.hasNext ();){
-            Serra s=i.next ();
-            System.out.println(s);
-        }
     }
 
     public void showDatePickerDialog(View v) {
@@ -158,7 +148,8 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
      */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-        Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
+        if(pos!=0)
+            Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
 
         if(parent.getItemAtPosition (pos).equals("lista serre")){
             //do nothing
@@ -166,22 +157,18 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         else{
             Gson gson = new GsonBuilder ().create();
             JsonArray JsonSerre = gson.toJsonTree(serre).getAsJsonArray();
-            JsonArray JsonNomiSerre = gson.toJsonTree(nomiSerre).getAsJsonArray();
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString ("JsonSerre",JsonSerre.toString ());
             editor.apply();
-            editor.putString ("JsonNomiSerre",JsonNomiSerre.toString ());
-            editor.apply();
+
 
             openInfo  = new Intent(aggiungi.this, Info.class);
+            openInfo.removeExtra ("ActivityKey");
+            openInfo.putExtra ("ActivityKey","Aggiungi");
             openInfo.putExtra("serra",serre.get(pos));
             openInfo.putExtra("nomiSerre",nomiSerre);
             startActivity (openInfo);
-            //no se dio bo
             }
-
-
-
     }
 
     @Override

@@ -40,13 +40,15 @@ public class Info extends Activity implements Serializable {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch(item.getItemId()){
                         case R.id.nav_info:
-                            Toast.makeText(Info.this,"Info page selected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Info.this,"Sei già nella pagina Info!", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.nav_reg:
-                            Toast.makeText(Info.this,"Register page selected", Toast.LENGTH_SHORT).show();
+                            Intent openReg = new Intent(Info.this,Registro.class);
+                            startActivity(openReg);
                             break;
                         case R.id.nav_ana:
-                            Toast.makeText(Info.this,"Analysis page selected", Toast.LENGTH_SHORT).show();
+                            Intent openAna = new Intent(Info.this,Analisi.class);
+                            startActivity(openAna);
                             break;
                     }
 
@@ -68,6 +70,7 @@ public class Info extends Activity implements Serializable {
             }
         });
     }
+
 
     public void load() {
 

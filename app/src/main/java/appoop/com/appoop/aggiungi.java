@@ -1,6 +1,8 @@
 package appoop.com.appoop;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,24 +17,39 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Date;
 import java.util.Iterator;
 
+
+import java.util.List;
 import java.util.Locale;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class aggiungi extends AppCompatActivity implements View.OnClickListener, OnItemSelectedListener {
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+
+
+public class aggiungi extends AppCompatActivity implements View.OnClickListener, OnItemSelectedListener,Serializable {
     ArrayList<Serra> serre;
     ArrayList<String> nomiSerre;
     Serra serra;
     public static Date data=null;
     Spinner spinner;
     Intent openInfo;
+    SharedPreferences preferences;
+
     public aggiungi() {
-        nomiSerre=new ArrayList<String> ();
-        serre=new ArrayList<Serra> ();
+        nomiSerre=new ArrayList ();
+        serre=new ArrayList();
         serra=new Serra();
     }
 
@@ -42,23 +59,45 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         setContentView (R.layout.activity_aggiungi);
         addListenerOnButtonClick();
         addListenerOnSpinnerItemSelection ();
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        /*
+            prima di tutto controlliamo se sharedpreference contiene i nostri array serre e nomi serre, se strjson è uguale a 0
+            vuol dire che l'array non è contenuto nella sharedPreference, cioè è la prima volta che apro l' app, allora imposto il
+            primo valore di nomiserre a "lista serre" e aggiungo il  primo valore (null) a serre per mantenere lo stesso indice.
+            se invece sono presenti li carichiamo.
+         */
+
+        String strJsonNomiSerre = preferences.getString("JsonNomiSerre","0");//second parameter is necessary ie.,Value to return if this preference does not exist.
+        String strJsonSerre = preferences.getString("JsonSerre","0");//second parameter is necessary ie.,Value to return if this preference does not exist.
+
+        if(strJsonNomiSerre.equals ("0") && strJsonSerre.equals ("0")){
+            nomiSerre.add("lista serre");
+            serre.add(0,null);
+            addItemsOnSpinner();
+        }else{
+            if (strJsonNomiSerre != null && strJsonSerre!= null) {
+                    nomiSerre = new Gson().fromJson(strJsonNomiSerre, new TypeToken<List<String>> (){}.getType());
+                    addItemsOnSpinner();
+                    serre = new Gson().fromJson(strJsonSerre, new TypeToken<List<Serra>> (){}.getType());
+
+
+                }
+
+            }
+
 
     }
 
     public void addItemsOnSpinner(){
+           spinner =  findViewById(R.id.spinner);
 
-        nomiSerre.removeAll(Collections.singleton(null));
-
-            spinner =  findViewById(R.id.spinner);
-            System.out.println ("ciao"+nomiSerre.size());
             // Creating adapter for spinner
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomiSerre);
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);
-
-
-    }
+     }
     public void addListenerOnSpinnerItemSelection(){
         spinner =  findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener( this);
@@ -82,6 +121,12 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         serra.setM2 ( Tm2.getText().toString());
         serra.setColtura ( Tcoltura.getText().toString());
         serra.setVarieta ( Tvarieta.getText().toString());
+        if(data==null){
+            String pattern = "dd/MM/yyyy";
+            DateFormat df = new SimpleDateFormat (pattern);
+            data= df.getCalendar ().getInstance().getTime();
+            System.out.println (""+data);
+        }
         serra.setTrapianto (data);
         serra.setLOentrata (Double.valueOf (TLOin.getText().toString()));
         serra.setLOsgrondo (Double.valueOf (TLOout.getText().toString()));
@@ -111,6 +156,12 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         }
     }
 
+    /*
+        se si è selezionato un elemento dallo spinner, se è il primo elemento non dobbiamo fare niente, se non è il primo dobbiamo
+        chiamare activity info, all' activity info passiamo il vettore nomiserre e la classe serra, invece per salvare i dati
+        su aggiungi utilizziamo la libreria sharedpreferences e salviamo gli array nomiserre e serre
+        nb: gli array devono essere prima convertiti in json per essere salvati in sharedpreferences
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
         Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
@@ -134,6 +185,9 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
             startActivity (openInfo);
             //no se dio bo
             }
+
+
+
     }
 
     @Override

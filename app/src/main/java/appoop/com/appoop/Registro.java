@@ -3,20 +3,17 @@ package appoop.com.appoop;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Registro extends Activity implements View.OnClickListener{
+public class Registro extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     public Date trapianto;
     public double LOentrata;
@@ -38,14 +35,6 @@ public class Registro extends Activity implements View.OnClickListener{
         GridView gridView01 = (GridView) findViewById(R.id.reg_dynamic);
         gridView01.setAdapter(adapter);
 
-        gridView01.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> av, View v, int pos,long id) {
-                System.out.println("elemento selezionato");
-            }
-        });
-
         final Button btnHome = (Button) findViewById(R.id.btn_home);
         btnHome.setOnClickListener(this);
 
@@ -56,29 +45,8 @@ public class Registro extends Activity implements View.OnClickListener{
                 startActivity(openPage1);
             }
         });
-
-        BottomNavigationView btnNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    case R.id.nav_info:
-                        Toast.makeText(Registro.this,"Info page selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_reg:
-                        Toast.makeText(Registro.this,"Register page selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.nav_ana:
-                        Toast.makeText(Registro.this,"Analysis page selected", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-
     }
+
 
     @Override
     public void onClick(View v) {
@@ -87,6 +55,16 @@ public class Registro extends Activity implements View.OnClickListener{
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

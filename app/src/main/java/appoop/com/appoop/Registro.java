@@ -3,17 +3,20 @@ package appoop.com.appoop;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Registro extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class Registro extends Activity implements View.OnClickListener{
 
     public Date trapianto;
     public double LOentrata;
@@ -29,11 +32,6 @@ public class Registro extends Activity implements View.OnClickListener, AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        //codice per l'implementazione della GridView
-        String[] citta = new String[]{"Pisa","Firenze","Bologna","Modena","Milano"}; //risorsa dalla quale il registro prende i dati
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row,citta);
-        GridView gridView01 = (GridView) findViewById(R.id.reg_dynamic);
-        gridView01.setAdapter(adapter);
 
         final Button btnHome = (Button) findViewById(R.id.btn_home);
         btnHome.setOnClickListener(this);
@@ -45,8 +43,32 @@ public class Registro extends Activity implements View.OnClickListener, AdapterV
                 startActivity(openPage1);
             }
         });
-    }
 
+        BottomNavigationView btnNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.nav_info:
+                        Intent openInfo = new Intent(Registro.this,Info.class);
+                        startActivity(openInfo);
+                        break;
+                    case R.id.nav_reg:
+                        Intent openReg = new Intent(Registro.this,Registro.class);
+                        startActivity(openReg);
+                        break;
+                    case R.id.nav_ana:
+                        Intent openAna = new Intent(Registro.this,Analisi.class);
+                        startActivity(openAna);
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -55,16 +77,6 @@ public class Registro extends Activity implements View.OnClickListener, AdapterV
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

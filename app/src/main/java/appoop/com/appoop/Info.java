@@ -3,10 +3,15 @@ package appoop.com.appoop;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,8 +40,8 @@ public class Info extends Activity implements Serializable {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch(item.getItemId()){
                         case R.id.nav_info:
-                            Toast.makeText(Info.this,"Sei già nella pagina Info!", Toast.LENGTH_SHORT).show();
-                            break;
+                            Toast.makeText(Info.this,"Sei già su Info", Toast.LENGTH_SHORT).show();
+                                    break;
                         case R.id.nav_reg:
                             Intent openReg = new Intent(Info.this,Registro.class);
                             startActivity(openReg);
@@ -65,7 +70,6 @@ public class Info extends Activity implements Serializable {
             }
         });
     }
-
 
     public void load() {
 

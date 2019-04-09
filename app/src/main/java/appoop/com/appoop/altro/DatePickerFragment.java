@@ -1,4 +1,4 @@
-package appoop.com.appoop;
+package appoop.com.appoop.altro;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,6 +8,9 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import appoop.com.appoop.Activity.AddRilevamento;
+import appoop.com.appoop.Activity.aggiungi;
 
 
 public  class DatePickerFragment extends DialogFragment   implements DatePickerDialog.OnDateSetListener {
@@ -28,6 +31,7 @@ public  class DatePickerFragment extends DialogFragment   implements DatePickerD
     public void onDateSet(DatePicker view, int year, int month, int day) {
         String s=""+day+'/'+month+'/'+year;
         aggiungi.setData(s);
+        AddRilevamento.setData (s);
     }
 
 }

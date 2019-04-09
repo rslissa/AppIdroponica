@@ -1,58 +1,53 @@
-package appoop.com.appoop;
+package appoop.com.appoop.Activity;
 
-import android.app.Activity;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import appoop.com.appoop.DBadapter.DBadapter;
+import appoop.com.appoop.R;
+import appoop.com.appoop.modelli.Serra;
 
 
-public class Info extends Activity implements Serializable {
+public class Info extends AppCompatActivity implements Serializable {
     Serra serra;
-    String key;
-    SharedPreferences preferences;
-
-
+    DBadapter db;
+    String nomeserra;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        key = getIntent().getStringExtra ("ActivityKey");
-        System.out.println("key:"+key);
-        if(key.equals ("Aggiungi")){
-            serra= (Serra) getIntent().getSerializableExtra("serra");
-        }else{
-            String strJsonserra = preferences.getString("JsonSerra","0");//second parameter is necessary ie.,Value to return if this preference does not exist.
-            System.out.println ("sono qui");
-            if(strJsonserra.equals ("0")){
-            }else{
-                serra= new Gson().fromJson(strJsonserra, new TypeToken<Serra> (){}.getType());
-                System.out.println(""+serra.toString ());
-            }
-
-        }
+        serra=new Serra();
+        db= new DBadapter ();
+        nomeserra=getIntent ().getStringExtra ("nomeserra");
+        serra=db.GetSerra (this,nomeserra);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
         ClickTastoHome();
         tastinavigazione();
         load();
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
     }
 
     public void ClickTastoHome(){
@@ -70,21 +65,18 @@ public class Info extends Activity implements Serializable {
         btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Gson gson = new GsonBuilder ().create();
-                JsonObject JsonSerra = gson.toJsonTree(serra).getAsJsonObject ();
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString ("JsonSerra",JsonSerra.toString ());
-                editor.apply();
                 switch(item.getItemId()){
                     case R.id.nav_info:
                         Toast.makeText(Info.this,"Sei già su Info", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_reg:
                         Intent openReg = new Intent(Info.this,Registro.class);
+                        openReg.putExtra ("nomeserra",nomeserra);
                         startActivity(openReg);
                         break;
                     case R.id.nav_ana:
                         Intent openAna = new Intent(Info.this,Analisi.class);
+                        openAna.putExtra ("nomeserra",nomeserra);
                         startActivity(openAna);
                         break;
                 }
@@ -96,7 +88,7 @@ public class Info extends Activity implements Serializable {
 
     public void load() {
 
-        EditText info_nome = findViewById(R.id.info_nome);
+        TextView info_nome = findViewById(R.id.info_nome);
         EditText info_m2 = findViewById(R.id.info_m2);
         EditText info_coltura = findViewById(R.id.info_coltura);
         EditText info_varieta = findViewById(R.id.info_varieta);

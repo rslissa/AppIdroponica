@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -189,5 +190,19 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.item2:
+                Toast.makeText(this,"Puoi già aggiungere una nuova serra",Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return true;
     }
 }

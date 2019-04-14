@@ -5,8 +5,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,6 +36,12 @@ public class AddRilevamento extends AppCompatActivity implements View.OnClickLis
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_addrilevamento);
         nomeserra=getIntent().getStringExtra ("nomeserra");
+
+        //setta il titolo dell'activity
+        TextView titolo = findViewById(R.id.textView11);
+        titolo.setText("Nuovo rilevamento" + " " + nomeserra);
+        titolo.setTextSize(22);
+
         addListenerOnButtonClick();
     }
     public void addListenerOnButtonClick(){

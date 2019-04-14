@@ -68,15 +68,11 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
     private XYSeries ecCurrentSeries;
     private XYSeriesRenderer ecCurrentRender;
 
-    public ArrayList<Rilevamento> rilevamenti = new ArrayList<>(3);
-    public Rilevamento r1;
-    public Rilevamento r2;
-    public Rilevamento r3;
 
     Date now =Calendar.getInstance ().getTime();
     DBadapter db;
 
- //   private static final String FORMAT = "yyyy-MM-dd"; //variabile per la conversione di date in stringa
+    //   private static final String FORMAT = "yyyy-MM-dd"; //variabile per la conversione di date in stringa
     SimpleDateFormat FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     public DatePickerFragment period = new DatePickerFragment();
 
@@ -135,14 +131,8 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
 
         int id = item.getItemId();
         switch (id) {
-
-            case R.id.item1:
-                //prendere una data con il picker ed impostarla come data inizio per il grafico
-                period.show(getSupportFragmentManager(), "datePicker");
-                //settare la data
-                break;
             case R.id.item2:
-                Intent goToAddNewSerra = new Intent(Analisi.this, aggiungi.class);
+                Intent goToAddNewSerra = new Intent(this, aggiungi.class);
                 startActivity(goToAddNewSerra);
                 break;
         }
@@ -213,7 +203,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
        // nRenderer.setYAxisMax(6);
         nRenderer.setLegendHeight(200);
         nRenderer.setFitLegend(false);
-        nRenderer.setMargins(new int[]{80, 100, 100, 0});
+        nRenderer.setMargins(new int[]{200, 100, 130, 80});
         nRenderer.setLegendTextSize(35);
         nRenderer.setAxisTitleTextSize(30);
         nRenderer.setChartTitleTextSize(40);
@@ -237,18 +227,21 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void onSuccessGS(Serra s) {
-                System.out.println ("rilevamenti in analisi: "+rilevamenti.toString ());
-                System.out.println ("serra in analisi: "+s.toString ());
+
+                Date incipit = new Date();
+                incipit = rilevamenti.get(0).data;
+                String strIncipit = FORMAT.format(incipit);
+                nRenderer.setXTitle("Il periodo selezionato parte dal" + strIncipit);
+
                 LinearLayout layout = findViewById(R.id.chart);
                 for (Iterator<Rilevamento> iter = rilevamenti.iterator(); iter.hasNext(); ) {
                     Rilevamento element = iter.next();
-                    nRenderer.setChartTitle(element.serra);
-                    System.out.println("titolo: "+nRenderer.getChartTitle ());
                     double func = ((element.L_sgrondo / element.L_entrata) / (s.LOentrata / s.LOsgrondo));
                     nCurrentSeries.add(rilevamenti.indexOf(element), func);
                     String strDate = FORMAT.format(element.getData ());
                     nRenderer.addXTextLabel(rilevamenti.indexOf(element), strDate);
-                    //nRenderer.setXTitle("Il periodo selezionato parte dal" + strDate);
+
+
                     ecCurrentSeries.add(rilevamenti.indexOf(element), element.EC_sgrondo);
 
                 }

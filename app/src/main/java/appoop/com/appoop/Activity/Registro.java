@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -41,11 +42,15 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
         setContentView(R.layout.activity_registro);
         nomeserra=getIntent().getStringExtra ("nomeserra");
 
+        //setta il titolo dell'activity
+        TextView titolo = findViewById(R.id.textView10);
+        titolo.setText("Registro" + " " + nomeserra);
+        titolo.setTextSize(22);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        tastohome();
         tastinavigazione();
         db=new DBadapter ();
         db.GetRilevamenti (this,nomeserra,new VolleyCallback ( ) {
@@ -106,20 +111,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    public void tastohome(){
 
-        final Button btnHome = findViewById(R.id.btn_home);
-        btnHome.setOnClickListener(this);
-
-        btnHome.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                Intent openPage1 = new Intent(Registro.this,aggiungi.class);
-                startActivity(openPage1);
-            }
-        });
-
-    }
     public void tastinavigazione(){
         BottomNavigationView btnNav = findViewById(R.id.bottom_navigation);
         btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -177,4 +169,18 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
         startActivity(openReg);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id) {
+
+            case R.id.item2:
+                Intent goToAddNewSerra = new Intent(this, aggiungi.class);
+                startActivity(goToAddNewSerra);
+                break;
+        }
+
+        return true;
+    }
 }

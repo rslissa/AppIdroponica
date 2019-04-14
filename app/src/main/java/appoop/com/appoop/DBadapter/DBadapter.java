@@ -45,7 +45,7 @@ public class DBadapter extends Thread{
 
 
     public ArrayList<Serra> GetSerre(Context context) {
-     final ArrayList serre = new ArrayList<> ( );
+        final ArrayList serre = new ArrayList<> ( );
         StringRequest stringRequest = new StringRequest (Request.Method.GET, URL_GETSERRE,
                 new Response.Listener<String> ( ) {
                     @Override

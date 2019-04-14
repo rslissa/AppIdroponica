@@ -48,6 +48,10 @@ public class RilevamentoAdapter extends RecyclerView.Adapter<RilevamentoAdapter.
         this.clickListener = clickListener;
     }
 
+    public List<Rilevamento> getRilevamentoList() {
+        return rilevamentoList;
+    }
+
     public class RilevamentoViewHolder extends RecyclerView.ViewHolder{
         protected  TextView showData;
         protected  TextView showEntrata;

@@ -27,8 +27,22 @@
             android:orientation="vertical">
 
 
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="nuovo rilevamento"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
-            <EditText
+            <TextView
 
                 android:id="@+id/label_data"
                 android:layout_width="match_parent"
@@ -72,7 +86,7 @@
                 app:layout_constraintVertical_bias="0.06"  />
 
 
-            <EditText
+            <TextView
                 android:id="@+id/label_Lentrata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,7 +127,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/info_m2"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <EditText
+            <TextView
                 android:id="@+id/label_Lsgrondo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +169,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/info_coltura"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <EditText
+            <TextView
                 android:id="@+id/label_EC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

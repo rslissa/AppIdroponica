@@ -191,7 +191,7 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="litri ora entrata"
+                    android:text="coefficiente entrata"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="@+id/registro_ec"
                     app:layout_constraintTop_toTopOf="@+id/registro_ec" />
@@ -202,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:ems="10"
-                    android:hint="inserire L/O in entrata"
+                    android:hint="inserire coefficiente L/O in entrata"
                     android:inputType="numberDecimal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/registro_ec" />
@@ -211,7 +211,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="litri ora sgrondo"
+                    android:text="coefficiente sgrondo"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/editText7"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:ems="10"
-                    android:hint="inserire L/O in uscita"
+                    android:hint="inserire coefficiente L/O sgrondo"
                     android:inputType="numberDecimal"
                     app:layout_constraintBottom_toTopOf="@+id/registro_ec"
                     app:layout_constraintStart_toStartOf="@+id/textView9" />

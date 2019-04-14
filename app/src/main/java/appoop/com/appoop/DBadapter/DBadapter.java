@@ -9,6 +9,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -29,7 +31,7 @@ import appoop.com.appoop.modelli.Rilevamento;
 import appoop.com.appoop.modelli.Serra;
 
 
-public class DBadapter {
+public class DBadapter extends Thread{
 
     private static final String URL_GETSERRE = "http://www.appidroponica.altervista.org/GetSerre.php ";
     private static final String URL_GETNOMESERRE = "http://www.appidroponica.altervista.org/GetNomeSerre.php ";
@@ -37,14 +39,12 @@ public class DBadapter {
     private static final String URL_PUTRILEVAMENTO = "http://www.appidroponica.altervista.org/PutRilevamento.php ";
     private static final String URL_GETSERRA = "http://www.appidroponica.altervista.org/GetSerra.php ";
     private static final String URL_GETRILEVAMENTI = "http://www.appidroponica.altervista.org/GetRilevamenti.php ";
-    ArrayList serre;
-    //Serra serra2=null;
-    Date trapianto=null;
-    ArrayList<Rilevamento> rilevamenti;
 
-     static Serra temp=new Serra();
+
+
+
     public ArrayList<Serra> GetSerre(Context context) {
-        serre = new ArrayList<> ( );
+     final ArrayList serre = new ArrayList<> ( );
         StringRequest stringRequest = new StringRequest (Request.Method.GET, URL_GETSERRE,
                 new Response.Listener<String> ( ) {
                     @Override
@@ -56,9 +56,14 @@ public class DBadapter {
                             //traversing through all the object
                             for (int i = 0; i < array.length ( ); i++) {
 
-                                //getting product object from json array
                                 JSONObject product = array.getJSONObject (i);
-                                //adding the product to product list
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                                Date trapianto = null;
+                                try {
+                                    trapianto = sdf.parse(product.getString ("trapianto"));
+                                } catch (ParseException e) {
+                                    e.printStackTrace ( );
+                                }
                                 serre.add (new Serra (
                                         product.getString ("nome"),
                                         product.getString ("m2"),
@@ -69,9 +74,6 @@ public class DBadapter {
                                         product.getDouble ("LOout"),
                                         product.getDouble ("targetEC")
                                 ));
-                            }
-                            for (int i = 0; i < serre.size ( ); i++) {
-                                System.out.println ("serra: " + serre.get (i).toString ( ));
                             }
 
                         } catch (JSONException e) {
@@ -88,10 +90,14 @@ public class DBadapter {
 
         //adding our stringrequest to queue
         Volley.newRequestQueue (context).add (stringRequest);
+
+        for (int i = 0; i < serre.size ( ); i++) {
+            System.out.println ("serra fuori try: " + serre.get (i).toString ( ));
+        }
         return serre;
     }
 
-    public ArrayList<String> GetNomeSerre(Context context) {
+    public void GetNomeSerre(Context context, final VolleyCallback callback) {
         final ArrayList<String> nomiserre=new ArrayList<> ();
         StringRequest stringRequest = new StringRequest (Request.Method.GET, URL_GETNOMESERRE,
                 new Response.Listener<String> ( ) {
@@ -111,10 +117,7 @@ public class DBadapter {
                                         product.getString ("nome")
                                 );
                             }
-                            for (int i = 0; i < nomiserre.size ( ); i++) {
-                                System.out.println ("nomeserra dentro al try: " +nomiserre.get (i));
-                            }
-
+                            callback.onSuccessGNS (nomiserre);
                         } catch (JSONException e) {
                             e.printStackTrace ( );
                         }
@@ -127,85 +130,72 @@ public class DBadapter {
                     }
                 });
 
-
-        for (int i = 0; i < nomiserre.size ( ); i++) {
-            System.out.println ("nomeserra fuori dal try: " +nomiserre.get (i));
-        }
-
-        //adding our stringrequest to queue
         Volley.newRequestQueue (context).add (stringRequest);
-        return nomiserre;
+
     }
 
-    public Serra GetSerra(Context context,String nomeserra)  {
-        //RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
-            final String ns = nomeserra;
 
-            StringRequest stringRequest = new StringRequest (Request.Method.POST, URL_GETSERRA, new Response.Listener<String> ( ) {
-
-                @Override
-                public void onResponse(String response) {
+    public void GetSerra(Context context,String nomeserra,final VolleyCallback callback) {
+        final Serra serra = new Serra ();
+        final String ns = nomeserra;
+        StringRequest stringRequest = new StringRequest (Request.Method.POST, URL_GETSERRA, new Response.Listener<String> ( ) {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //converting the string to json array object
+                    JSONArray array = new JSONArray (response);
+                    //traversing through all the object
+                    for (int i = 0; i < array.length ( ); i++) {
+                        //getting product object from json array
+                        JSONObject product = array.getJSONObject (i);
+                        //adding the product to product list
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Date trapianto = null;
+                        System.out.println ("stampa dioporco: "+(product.getString ("trapianto")));
                         try {
-                        //converting the string to json array object
-                        JSONArray array = new JSONArray (response);
-                        Serra serra2=new Serra();
-                        //traversing through all the object
-                        for (int i = 0; i < array.length ( ); i++) {
-
-                            //getting product object from json array
-                            JSONObject product = array.getJSONObject (i);
-
-                            //adding the product to product list
-                            serra2.setSerra (product.getString ("nome"));
-                            serra2.setM2 (product.getString ("m2"));
-                            serra2.setColtura (product.getString ("coltura"));
-                            serra2.setVarieta (product.getString ("varieta"));
-                            serra2.setTrapianto (trapianto);
-                            serra2.setLOentrata (product.getDouble ("LOin"));
-                            serra2.setLOsgrondo (product.getDouble ("LOout"));
-                            serra2.setTargetEC (product.getDouble ("targetEC"));
-
-                            System.out.println ("ricevuto dentro al try: " + serra2.toString ( ));
+                            trapianto = sdf.parse(product.getString ("trapianto"));
+                        } catch (ParseException e) {
+                            e.printStackTrace ( );
                         }
+                        serra.setSerra (product.getString ("nome"));
+                        serra.setM2 (product.getString ("m2"));
+                        serra.setColtura (product.getString ("coltura"));
+                        serra.setVarieta (product.getString ("varieta"));
+                        serra.setTrapianto (trapianto);
+                        serra.setLOentrata (product.getDouble ("LOin"));
+                        serra.setLOsgrondo (product.getDouble ("LOout"));
+                        serra.setTargetEC (product.getDouble ("targetEC"));
 
-                            temp=serra2;
-                            temp.setSerra ("dioporco");
-                    } catch (JSONException e) {
-                        e.printStackTrace ( );
+
+                        callback.onSuccessGS (serra);
                     }
 
+                } catch (JSONException e) {
+                    e.printStackTrace ( );
                 }
-            }, new Response.ErrorListener ( ) { //Create an error listener to handle errors appropriately.
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e ("VOLLEY NOT OK", error.toString ( ));
 
-                }
-            }) {
-                protected Map<String, String> getParams() {
-                    Map<String, String> MyData = new HashMap<String, String> ( );
-                    MyData.put ("nome", ns);
-                    return MyData;
-                }
-            };
+            }
+        }, new Response.ErrorListener ( ) { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e ("VOLLEY NOT OK", error.toString ( ));
 
+            }
+        }) {
 
-            Volley.newRequestQueue (context).add (stringRequest);
-        try {
-            Thread.sleep (1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace ( );
-        }
-
-        System.out.println ("ricevuto fuori dal try: " + temp.toString ( ));
-                return temp;
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String> ( );
+                MyData.put ("nome", ns);
+                return MyData;
+            }
+        };
 
 
+        Volley.newRequestQueue (context).add (stringRequest);
     }
-
-    public ArrayList<Rilevamento> GetRilevamenti(Context context,String nomeserra) {
+    public void GetRilevamenti(Context context,String nomeserra,final VolleyCallback callback) {
+        final ArrayList<Rilevamento> rilevamenti=new ArrayList<> ();
         RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
-        rilevamenti=new ArrayList();
         final String ns=nomeserra;
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, URL_GETRILEVAMENTI, new Response.Listener<String>() {
@@ -218,9 +208,14 @@ public class DBadapter {
 
                     for (int i = 0; i < array.length ( ); i++) {
 
-                        //getting product object from json array
                         JSONObject product = array.getJSONObject (i);
-                        //adding the product to product list
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Date trapianto = null;
+                        try {
+                            trapianto = sdf.parse(product.getString ("data"));
+                        } catch (ParseException e) {
+                            e.printStackTrace ( );
+                        }
                         rilevamenti.add (
                                 new Rilevamento (
                                         product.getString ("nome"),
@@ -231,10 +226,7 @@ public class DBadapter {
                                 ));
 
                     }
-                    for(int i=0;i<rilevamenti.size ();++i){
-                        System.out.println("rilevamenti ricevuti: "+rilevamenti.get(i));
-                    }
-
+                    callback.onSuccessGR (rilevamenti);
                 } catch (JSONException e) {
                     e.printStackTrace ( );
                 }
@@ -253,7 +245,6 @@ public class DBadapter {
         };
 
         MyRequestQueue.add(MyStringRequest);
-        return rilevamenti;
     }
 
 
@@ -322,4 +313,6 @@ public class DBadapter {
 
         MyRequestQueue.add(MyStringRequest);
     }
+
+
 }

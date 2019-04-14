@@ -18,29 +18,49 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import appoop.com.appoop.DBadapter.DBadapter;
+import appoop.com.appoop.DBadapter.VolleyCallback;
 import appoop.com.appoop.R;
+import appoop.com.appoop.modelli.Rilevamento;
 import appoop.com.appoop.modelli.Serra;
 
 
 public class Info extends AppCompatActivity implements Serializable {
-    Serra serra;
     DBadapter db;
     String nomeserra;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        serra=new Serra();
         db= new DBadapter ();
         nomeserra=getIntent ().getStringExtra ("nomeserra");
-        serra=db.GetSerra (this,nomeserra);
+
+        db.GetSerra (this,nomeserra,new VolleyCallback ( ) {
+            @Override
+            public void onSuccessGNS(ArrayList ns) {
+                //do nothing
+            }
+
+            @Override
+            public void onSuccessGS(Serra s) {
+                System.out.println ("stampa serra: "+s.toString ());
+                load(s);
+            }
+
+            @Override
+            public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                //do nothing
+            }
+        });
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         ClickTastoHome();
         tastinavigazione();
-        load();
+
 
     }
     @Override
@@ -86,7 +106,7 @@ public class Info extends AppCompatActivity implements Serializable {
         });
     }
 
-    public void load() {
+    public void load(Serra serra) {
 
         TextView info_nome = findViewById(R.id.info_nome);
         EditText info_m2 = findViewById(R.id.info_m2);

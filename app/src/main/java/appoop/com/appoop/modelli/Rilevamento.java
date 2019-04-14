@@ -76,7 +76,7 @@ public class Rilevamento implements Serializable {
                 '}';
     }
     public String dataToString(){
-        String pattern = "dd/MM/yyyy";
+        String pattern = "dd-MM-yyyy";
         DateFormat df = new SimpleDateFormat (pattern);
         return(df.format(getData ()));
     }

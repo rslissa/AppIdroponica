@@ -26,38 +26,62 @@ import java.util.Date;
 import java.util.ArrayList;
 
 import appoop.com.appoop.DBadapter.DBadapter;
+import appoop.com.appoop.DBadapter.VolleyCallback;
 import appoop.com.appoop.altro.ClickListener;
 import appoop.com.appoop.R;
 import appoop.com.appoop.modelli.Rilevamento;
 import appoop.com.appoop.altro.RilevamentoAdapter;
+import appoop.com.appoop.modelli.Serra;
 
 public class Registro extends AppCompatActivity implements View.OnClickListener, ClickListener {
     private FrameLayout registro;
     private FloatingActionButton fab;
     private RecyclerView recycler;
     public RilevamentoAdapter rAdapter;
-    public ArrayList<Rilevamento> rilevamenti = new ArrayList<>();
+   // public ArrayList<Rilevamento> rilevamenti = new ArrayList<>();
     String nomeserra;
     DBadapter db;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        nomeserra=getIntent ().getStringExtra ("nomeserra");
+        nomeserra=getIntent().getStringExtra ("nomeserra");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
         tastohome();
         tastinavigazione();
-        registro = findViewById(R.id.RilevamentiFrame);
-        registro.setVisibility(View.VISIBLE);
-        recycler = findViewById(R.id.RilevamentiList);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(llm);
-        rAdapter = new RilevamentoAdapter (rilevamenti);
-        rAdapter.setClickListener(this);
-        recycler.setAdapter(rAdapter);
-        updateList();
+        db=new DBadapter ();
+        db.GetRilevamenti (this,nomeserra,new VolleyCallback ( ) {
+            @Override
+            public void onSuccessGNS(ArrayList ns) {
+                //do nothing
+            }
+
+            @Override
+            public void onSuccessGS(Serra s) {
+                //do nothing
+            }
+
+            @Override
+            public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                System.out.println ("lista rilevamenti: "+lr.toString ());
+                registro = findViewById(R.id.RilevamentiFrame);
+                registro.setVisibility(View.VISIBLE);
+                recycler = findViewById(R.id.RilevamentiList);
+                LinearLayoutManager llm = new LinearLayoutManager(Registro.this);
+                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                recycler.setLayoutManager(llm);
+                rAdapter = new RilevamentoAdapter (lr);
+                rAdapter.setClickListener(Registro.this);
+                recycler.setAdapter(rAdapter);
+            }
+        });
+
+
+
+
         fab = findViewById(R.id.addRilevamento);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,33 +95,6 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    public void updateList() {
-      /*
-        String pattern = "dd/MM/yyyy";
-        DateFormat df = new SimpleDateFormat (pattern);
-        Date data= df.getCalendar ().getInstance().getTime();
-        Rilevamento r1=new Rilevamento ("c1",data,1,1,1);
-        Rilevamento r2=new Rilevamento ("c1",data,2,2,2);
-        Rilevamento r3=new Rilevamento ("c1",data,3,3,3);
-        Rilevamento r4=new Rilevamento ("c1",data,3,3,3);
-        Rilevamento r5=new Rilevamento ("c1",data,3,3,3);
-        Rilevamento r6=new Rilevamento ("c1",data,3,3,3);
-        Rilevamento r7=new Rilevamento ("c1",data,3,3,3);
-        Rilevamento r8=new Rilevamento ("c1",data,3,3,3);
-
-
-        rilevamenti.add(r1);
-        rilevamenti.add(r2);
-        rilevamenti.add(r3);
-        rilevamenti.add(r4);
-        rilevamenti.add(r5);
-        rilevamenti.add(r6);
-        rilevamenti.add(r7);
-        rilevamenti.add(r8);
-    */
-      db=new DBadapter ();
-      rilevamenti=db.GetRilevamenti (this,nomeserra);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -113,6 +110,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
     public void tastohome(){
 
         final Button btnHome = findViewById(R.id.btn_home);

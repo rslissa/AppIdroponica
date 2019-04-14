@@ -1,10 +1,9 @@
 package appoop.com.appoop.Activity;
 
+import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -21,35 +20,32 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import appoop.com.appoop.DBadapter.DBadapter;
+import appoop.com.appoop.DBadapter.VolleyCallback;
 import appoop.com.appoop.altro.DatePickerFragment;
 import appoop.com.appoop.R;
 import appoop.com.appoop.modelli.Rilevamento;
 import appoop.com.appoop.modelli.Serra;
 
 public class aggiungi extends AppCompatActivity implements View.OnClickListener, OnItemSelectedListener,Serializable {
-    ArrayList<String> nomiSerre;
+    ArrayList<String> nomiserre;
     public static Date data=null;
     Serra serra;
     Spinner spinner;
     Intent openInfo;
     DBadapter db;
     public aggiungi() {
-        nomiSerre= new ArrayList<> ( );
+        serra=new Serra ();
+
         db=new DBadapter ();
     }
 
@@ -63,13 +59,29 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         loadNomiSerre ();
-        System.out.println("serra ricevuta su aggiungi:"+db.GetSerra (this,"b2").toString ());
+      
     }
-    private void loadNomiSerre(){
 
-        nomiSerre=db.GetNomeSerre (this);
-        nomiSerre.add(0,"lista serre");
-        addItemsOnSpinner();
+    private void loadNomiSerre( ){
+        db.GetNomeSerre (this,new VolleyCallback ( ) {
+            @Override
+            public void onSuccessGNS(ArrayList <String> ns) {
+                nomiserre=new ArrayList<> (ns);
+                nomiserre.add(0,"lista serre");
+                addItemsOnSpinner (nomiserre);
+            }
+
+            @Override
+            public void onSuccessGS(Serra s) {
+                //do nothing
+            }
+
+            @Override
+            public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                //do nothing
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,9 +89,9 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         inflater.inflate(R.menu.example_menu, menu);
         return true;
     }
-    public void addItemsOnSpinner(){
-           spinner =  findViewById(R.id.spinner);
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomiSerre);
+    public void addItemsOnSpinner(ArrayList ns){
+            spinner =  findViewById(R.id.spinner);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ns);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);
      }
@@ -118,8 +130,9 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         serra.setLOsgrondo (Double.valueOf (TLOout.getText().toString()));
         serra.setTargetEC (Double.valueOf (TEC.getText().toString()));
         db.PutSerra (this,serra);
-        nomiSerre.add(serra.getSerra ());
-        addItemsOnSpinner();
+        ArrayList temp=new ArrayList ();
+        temp.add(serra.getSerra ());
+        addItemsOnSpinner (temp);
     }
 
     public void showDatePickerDialog(View v) {
@@ -141,26 +154,40 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         se si è selezionato un elemento dallo spinner, se è il primo elemento non dobbiamo fare niente, se non è il primo dobbiamo
         chiamare activity info, all' activity info passiamo il nome della serra,
      */
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        serra=new Serra();
-        if(pos!=0){
-
-        }
-            Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
+    public void onItemSelected(final AdapterView<?> parent, View view,final int pos, long id) {
 
         if(parent.getItemAtPosition (pos).equals("lista serre")){
             //do nothing
+        }else{
+            db.GetNomeSerre (this,new VolleyCallback ( ) {
+                @Override
+                public void onSuccessGNS(ArrayList <String> ns) {
+                    if(pos!=0){
+                        Toast.makeText(parent.getContext(),"Serra : " + parent.getItemAtPosition(pos).toString (),Toast.LENGTH_SHORT).show();
+                        String nomeserra=  ns.get(pos-1);
+                        openInfo  = new Intent(aggiungi.this, Info.class);
+                        openInfo.putExtra("nomeserra",nomeserra);
+                        startActivity (openInfo);
+                    }
+                }
+
+                @Override
+                public void onSuccessGS(Serra s) {
+                    //do nothing
+                }
+
+                @Override
+                public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                    //do nothing
+                }
+            });
         }
-        else{
-            openInfo  = new Intent(aggiungi.this, Info.class);
-            openInfo.putExtra("nomeserra",nomiSerre.get (pos));
-            startActivity (openInfo);
-        }
+
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
     }
-
 }

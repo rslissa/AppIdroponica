@@ -14,12 +14,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import appoop.com.appoop.DBadapter.DBadapter;
 import appoop.com.appoop.altro.DatePickerFragment;
 import appoop.com.appoop.R;
 import appoop.com.appoop.modelli.Rilevamento;
 
 public class AddRilevamento extends AppCompatActivity implements View.OnClickListener {
     Rilevamento rilevamento;
+    String nomeserra;
+    DBadapter db;
     public static Date data=null;
     Intent openREG;
     public AddRilevamento() {
@@ -30,6 +33,7 @@ public class AddRilevamento extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_addrilevamento);
+        nomeserra=getIntent().getStringExtra ("nomeserra");
         addListenerOnButtonClick();
     }
     public void addListenerOnButtonClick(){
@@ -42,7 +46,7 @@ public class AddRilevamento extends AppCompatActivity implements View.OnClickLis
         EditText Lentrata = findViewById(R.id.edit_Lentrata);
         EditText Luscita= findViewById (R.id.edit_sgrondo);
         EditText EC=findViewById (R.id.edit_EC);
-
+        rilevamento.setSerra (nomeserra);
         rilevamento.setL_entrata(Double.valueOf(Lentrata.getText().toString ())) ;
         rilevamento.setL_sgrondo (Double.valueOf(Luscita.getText().toString ())) ;
         rilevamento.setEC_sgrondo (Double.valueOf(EC.getText().toString ()));
@@ -55,8 +59,11 @@ public class AddRilevamento extends AppCompatActivity implements View.OnClickLis
 
         }
         rilevamento.setData (data);
+        db=new DBadapter ();
+        db.PutRilevamento (this,rilevamento);
+        System.out.println ("rilevamento ricevuto: "+rilevamento.toString ());
         openREG  = new Intent (AddRilevamento.this, Registro.class);
-        openREG.putExtra ("Rilevamento",rilevamento);
+        openREG.putExtra ("nomeserra",nomeserra);
         startActivity (openREG);
 
     }

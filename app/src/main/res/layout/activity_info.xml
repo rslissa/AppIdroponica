@@ -100,7 +100,7 @@
                 android:orientation="vertical">
 
 
-                <EditText
+                <TextView
 
                     android:id="@+id/label_m2"
                     android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/info_nome"
                     app:layout_constraintVertical_bias="0.06" />
 
-                <EditText
+                <TextView
                     android:id="@+id/label_coltura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/info_m2"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <EditText
+                <TextView
                     android:id="@+id/label_varieta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -245,7 +245,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/info_coltura"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <EditText
+                <TextView
                     android:id="@+id/label_entrata"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -292,7 +292,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/info_data"
                     app:layout_constraintVertical_bias="0.048" />
 
-                <EditText
+                <TextView
                     android:id="@+id/label_uscita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -337,7 +337,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/info_entrata" />
 
-                <EditText
+                <TextView
                     android:id="@+id/label_ec"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -385,7 +385,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/info_uscita"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <EditText
+                <TextView
                     android:id="@+id/label_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

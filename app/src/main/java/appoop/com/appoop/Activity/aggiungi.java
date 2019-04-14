@@ -64,6 +64,10 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         getSupportActionBar().setTitle(null);
         loadNomiSerre ();
         System.out.println("serra ricevuta su aggiungi:"+db.GetSerra (this,"b2").toString ());
+
+        //due righe temporanee per test su analisi
+        Intent open = new Intent(aggiungi.this,Analisi.class);
+        startActivity(open);
     }
     private void loadNomiSerre(){
 

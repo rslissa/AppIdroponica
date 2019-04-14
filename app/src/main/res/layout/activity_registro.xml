@@ -44,7 +44,7 @@
             android:layout_width="76dp"
             android:layout_height="76dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="60dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:adjustViewBounds="false"
@@ -56,25 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_home"
-            app:layout_constraintVertical_bias="0.864"
             app:srcCompat="@android:drawable/ic_menu_add" />
-
-        <Button
-            android:id="@+id/btn_home"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:icon="@drawable/ic_action_home"
-            android:text="H"
-            android:title="@string/button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/RilevamentiList"
@@ -95,13 +77,12 @@
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="116dp"
+            android:layout_width="wrap_content"
             android:layout_height="34dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="registro"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat"
@@ -109,10 +90,9 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/btn_home"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.018"
-            tools:text="registro" />
+            app:layout_constraintVertical_bias="0.018" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

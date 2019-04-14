@@ -16,11 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 import java.util.ArrayList;
@@ -38,7 +35,6 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     private FloatingActionButton fab;
     private RecyclerView recycler;
     public RilevamentoAdapter rAdapter;
-   // public ArrayList<Rilevamento> rilevamenti = new ArrayList<>();
     String nomeserra;
     DBadapter db;
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +42,15 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
         setContentView(R.layout.activity_registro);
         nomeserra=getIntent().getStringExtra ("nomeserra");
 
+        //setta il titolo dell'activity
+        TextView titolo = findViewById(R.id.textView10);
+        titolo.setText("Registro" + " " + nomeserra);
+        titolo.setTextSize(22);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        tastohome();
         tastinavigazione();
         db=new DBadapter ();
         db.GetRilevamenti (this,nomeserra,new VolleyCallback ( ) {
@@ -111,20 +111,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    public void tastohome(){
 
-        final Button btnHome = findViewById(R.id.btn_home);
-        btnHome.setOnClickListener(this);
-
-        btnHome.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                Intent openPage1 = new Intent(Registro.this,aggiungi.class);
-                startActivity(openPage1);
-            }
-        });
-
-    }
     public void tastinavigazione(){
         BottomNavigationView btnNav = findViewById(R.id.bottom_navigation);
         btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -162,10 +149,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.context_menu_delete:
-                        deleteVoto(position);
-                        return true;
-                    case R.id.context_menu_modify:
-                        modifyVoto(position);
+                        deleteRilevamento (position);
                         return true;
                     default:
                         return false;
@@ -175,14 +159,28 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     }
 
 
-    public void deleteVoto(int pos){
-
-        Intent i = new Intent(this, Registro.class);
-        startActivity(i);
+    public void deleteRilevamento(int pos){
+        ArrayList <Rilevamento>lr=new ArrayList (rAdapter.getRilevamentoList ());
+        Rilevamento deleterilevamento=lr.get (pos);
+        db.DeleteRilevamento (this,deleterilevamento);
+        Toast.makeText(this,"rilevamento eliminato",Toast.LENGTH_SHORT).show();
+        Intent openReg = new Intent(Registro.this,Registro.class);
+        openReg.putExtra ("nomeserra",nomeserra);
+        startActivity(openReg);
     }
-    public void modifyVoto(int pos){
 
-        Intent i = new Intent(getBaseContext(), AddRilevamento.class);
-        startActivity(i);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id) {
+
+            case R.id.item2:
+                Intent goToAddNewSerra = new Intent(this, aggiungi.class);
+                startActivity(goToAddNewSerra);
+                break;
+        }
+
+        return true;
     }
 }

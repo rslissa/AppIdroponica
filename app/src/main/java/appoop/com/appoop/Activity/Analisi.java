@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +23,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import appoop.com.appoop.DBadapter.DBadapter;
+import appoop.com.appoop.DBadapter.VolleyCallback;
 import appoop.com.appoop.R;
+import appoop.com.appoop.altro.RilevamentoAdapter;
 import appoop.com.appoop.modelli.Rilevamento;
 import appoop.com.appoop.modelli.Serra;
 
@@ -65,16 +68,12 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
     private XYSeries ecCurrentSeries;
     private XYSeriesRenderer ecCurrentRender;
 
-    public ArrayList<Rilevamento> rilevamenti = new ArrayList<>(3);
-    public Rilevamento r1;
-    public Rilevamento r2;
-    public Rilevamento r3;
 
-    public Serra s;
-    Serra serra;
+    Date now =Calendar.getInstance ().getTime();
+    DBadapter db;
 
-    private static final String FORMAT = "dd/MM/yyyy"; //variabile per la conversione di date in stringa
-
+    //   private static final String FORMAT = "yyyy-MM-dd"; //variabile per la conversione di date in stringa
+    SimpleDateFormat FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     public DatePickerFragment period = new DatePickerFragment();
 
     String nomeserra;
@@ -83,23 +82,34 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analisi);
         nomeserra = getIntent().getStringExtra("nomeserra");
+        db=new DBadapter ();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         tastinavigazione();
 
+        if (nChart == null) {
+            db.GetRilevamenti (this,nomeserra,new VolleyCallback ( ) {
+                @Override
+                public void onSuccessGNS(ArrayList ns) {
+                    //do nothing
+                }
 
-        Date now = Calendar.getInstance().getTime();
-        r1 = new Rilevamento("serra1", now, 2.1, 3.2, 4.56);
-        r2 = new Rilevamento("serra1", now, 2.5, 2.8, 5);
-        r3 = new Rilevamento("serra1", now, 3, 3.2, 4.38);
+                @Override
+                public void onSuccessGS(Serra s) {
+                    //do nothing
+                }
 
-        rilevamenti.add(r1);
-        rilevamenti.add(r2);
-        rilevamenti.add(r3);
+                @Override
+                public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                    initChart(lr);
 
-        s = new Serra("serra1", "12", "melanzane", "bianche", now, 2.0, 2.4, 4.3);
+                }
+            });
 
+        } else {
+            //  nChart.repaint();
+        }
 
     }
 
@@ -121,14 +131,8 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
 
         int id = item.getItemId();
         switch (id) {
-
-            case R.id.item1:
-                //prendere una data con il picker ed impostarla come data inizio per il grafico
-                period.show(getSupportFragmentManager(), "datePicker");
-                //settare la data
-                break;
             case R.id.item2:
-                Intent goToAddNewSerra = new Intent(Analisi.this, aggiungi.class);
+                Intent goToAddNewSerra = new Intent(this, aggiungi.class);
                 startActivity(goToAddNewSerra);
                 break;
         }
@@ -144,18 +148,16 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
                 switch (item.getItemId()) {
                     case R.id.nav_info:
                         Intent openInfo = new Intent(Analisi.this, Info.class);
-                        openInfo.removeExtra("ActivityKey");
-                        openInfo.putExtra("ActivityKey", "Analisi");
+                        openInfo.putExtra("nomeserra", nomeserra);
                         startActivity(openInfo);
                         break;
                     case R.id.nav_reg:
                         Intent openReg = new Intent(Analisi.this, Registro.class);
-                        openReg.removeExtra("ActivityKey");
-                        openReg.putExtra("ActivityKey", "Analisi");
+                        openReg.putExtra("nomeserra", nomeserra);
                         startActivity(openReg);
                         break;
                     case R.id.nav_ana:
-                        Toast.makeText(Analisi.this, "Sei gi? su analisi", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Analisi.this, "Sei già su analisi", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -164,7 +166,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    private void initChart() {
+    private void initChart(final ArrayList<Rilevamento> rilevamenti) {
         //funzione 1
         nCurrentSeries = new XYSeries("Analisi rilevamenti");
         nDataset.addSeries(nCurrentSeries);
@@ -201,7 +203,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
         nRenderer.setYAxisMax(6);
         nRenderer.setLegendHeight(200);
         nRenderer.setFitLegend(false);
-        nRenderer.setMargins(new int[]{80, 100, 100, 0});
+        nRenderer.setMargins(new int[]{200, 100, 130, 80});
         nRenderer.setLegendTextSize(35);
         nRenderer.setAxisTitleTextSize(30);
         nRenderer.setChartTitleTextSize(40);
@@ -217,44 +219,51 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
         nRenderer.setShowLegend(true);//elimina la parte inferiore permettendo al grafico di stare a tuttoschermo
         nRenderer.setXLabels(0); //nasconde le labels dell'asse x
         nRenderer.setInScroll(true);
+        db.GetSerra (this,nomeserra,new VolleyCallback ( ) {
+            @Override
+            public void onSuccessGNS(ArrayList ns) {
+                //do nothing
+            }
+
+            @Override
+            public void onSuccessGS(Serra s) {
+                Date incipit = new Date();
+                incipit = rilevamenti.get(0).data;
+                String strIncipit = FORMAT.format(incipit);
+                nRenderer.setXTitle("Il periodo selezionato parte dal" + strIncipit);
+
+                LinearLayout layout = findViewById(R.id.chart);
+                for (Iterator<Rilevamento> iter = rilevamenti.iterator(); iter.hasNext(); ) {
+                    Rilevamento element = iter.next();
+                    double func = ((element.L_sgrondo / element.L_entrata) / (s.LOentrata / s.LOsgrondo));
+                    nCurrentSeries.add(rilevamenti.indexOf(element), func);
+                    String strDate = FORMAT.format(element.getData ());
+                    nRenderer.addXTextLabel(rilevamenti.indexOf(element), strDate);
 
 
-        for (Iterator<Rilevamento> iter = rilevamenti.iterator(); iter.hasNext(); ) {
-            Rilevamento element = iter.next();
+                    ecCurrentSeries.add(rilevamenti.indexOf(element), element.EC_sgrondo);
 
-            nRenderer.setChartTitle(element.serra);//titolo per il grafico (modificare la posizione?)
+                }
 
-            //tramite questa funzione ottengo un punto del grafico
-            double func = ((element.L_sgrondo / element.L_entrata) / (s.LOentrata / s.LOsgrondo));
-            //func = (double) (Math.round(func*10)/10);
+                nChart = ChartFactory.getCubeLineChartView(Analisi.this, nDataset, nRenderer, 0);
+                //layout.addView(nChart);
+                layout.addView(nChart, new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1800));
+            }
 
-            nCurrentSeries.add(rilevamenti.indexOf(element), func);
+            @Override
+            public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                //do nothing
+            }
+        });
 
-            //converto la data del rilevamento in una stringa
-            DateFormat df = new SimpleDateFormat(FORMAT);
-            String strDate = df.format(element.data);
 
-            nRenderer.addXTextLabel(rilevamenti.indexOf(element), strDate);//da implemtare la data del rilevamento
-            nRenderer.setXTitle("Il periodo selezionato parte dal" + strDate);
-
-            ecCurrentSeries.add(rilevamenti.indexOf(element), element.EC_sgrondo);
-
-        }
 
     }
 
     protected void onResume() {
 
         super.onResume();
-        LinearLayout layout = findViewById(R.id.chart);
-        if (nChart == null) {
-            initChart();
-            nChart = ChartFactory.getCubeLineChartView(this, nDataset, nRenderer, 0);
-            //layout.addView(nChart);
-            layout.addView(nChart, new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1800));
-        } else {
-            nChart.repaint();
-        }
+
     }
 
     protected void onChange() {

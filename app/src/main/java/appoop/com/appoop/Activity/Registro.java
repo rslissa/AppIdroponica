@@ -18,10 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 import java.util.ArrayList;
 
@@ -38,7 +34,6 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     private FloatingActionButton fab;
     private RecyclerView recycler;
     public RilevamentoAdapter rAdapter;
-   // public ArrayList<Rilevamento> rilevamenti = new ArrayList<>();
     String nomeserra;
     DBadapter db;
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,10 +157,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.context_menu_delete:
-                        deleteVoto(position);
-                        return true;
-                    case R.id.context_menu_modify:
-                        modifyVoto(position);
+                        deleteRilevamento (position);
                         return true;
                     default:
                         return false;
@@ -175,14 +167,14 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     }
 
 
-    public void deleteVoto(int pos){
-
-        Intent i = new Intent(this, Registro.class);
-        startActivity(i);
+    public void deleteRilevamento(int pos){
+        ArrayList <Rilevamento>lr=new ArrayList (rAdapter.getRilevamentoList ());
+        Rilevamento deleterilevamento=lr.get (pos);
+        db.DeleteRilevamento (this,deleterilevamento);
+        Toast.makeText(this,"rilevamento eliminato",Toast.LENGTH_SHORT).show();
+        Intent openReg = new Intent(Registro.this,Registro.class);
+        openReg.putExtra ("nomeserra",nomeserra);
+        startActivity(openReg);
     }
-    public void modifyVoto(int pos){
 
-        Intent i = new Intent(getBaseContext(), AddRilevamento.class);
-        startActivity(i);
-    }
 }

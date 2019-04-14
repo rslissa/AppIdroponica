@@ -37,6 +37,7 @@ public class DBadapter extends Thread{
     private static final String URL_GETNOMESERRE = "http://www.appidroponica.altervista.org/GetNomeSerre.php ";
     private static final String URL_PUTSERRA = "http://www.appidroponica.altervista.org/PutSerra.php ";
     private static final String URL_PUTRILEVAMENTO = "http://www.appidroponica.altervista.org/PutRilevamento.php ";
+    private static final String URL_DELETERILEVAMENTO = "http://www.appidroponica.altervista.org/DeleteRilevamento.php ";
     private static final String URL_GETSERRA = "http://www.appidroponica.altervista.org/GetSerra.php ";
     private static final String URL_GETRILEVAMENTI = "http://www.appidroponica.altervista.org/GetRilevamenti.php ";
 
@@ -314,5 +315,32 @@ public class DBadapter extends Thread{
         MyRequestQueue.add(MyStringRequest);
     }
 
+    public void DeleteRilevamento(Context context,Rilevamento r){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
+        final Rilevamento rilevamento=r;
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, URL_DELETERILEVAMENTO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("VOLLEY OK", response);
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY NOT OK", error.toString());
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                formatter.format(rilevamento.getData ());
+                Map<String, String> MyData = new HashMap<String, String> ();
+                MyData.put("serra",rilevamento.getSerra ());
+                MyData.put("data",formatter.format(rilevamento.getData ()));
+                return MyData;
+            }
+        };
+
+
+        MyRequestQueue.add(MyStringRequest);
+    }
 
 }

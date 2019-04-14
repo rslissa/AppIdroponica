@@ -36,6 +36,11 @@ public class Info extends AppCompatActivity implements Serializable {
         db= new DBadapter ();
         nomeserra=getIntent ().getStringExtra ("nomeserra");
 
+        //setta il titolo dell'activity
+        TextView titolo = findViewById(R.id.info_nome);
+        titolo.setText("Info" + " " + nomeserra);
+        titolo.setTextSize(22);
+
         db.GetSerra (this,nomeserra,new VolleyCallback ( ) {
             @Override
             public void onSuccessGNS(ArrayList ns) {
@@ -58,7 +63,6 @@ public class Info extends AppCompatActivity implements Serializable {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-        ClickTastoHome();
         tastinavigazione();
 
 
@@ -70,16 +74,7 @@ public class Info extends AppCompatActivity implements Serializable {
         return true;
     }
 
-    public void ClickTastoHome(){
-        final Button btnHome = findViewById(R.id.button_home);
-        btnHome.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-                Intent openAggiungi = new Intent(Info.this,aggiungi.class);
-                startActivity(openAggiungi);
-            }
-        });
-    }
+
     public void tastinavigazione(){
         BottomNavigationView btnNav = findViewById(R.id.bottom_navigation);
         btnNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -108,7 +103,7 @@ public class Info extends AppCompatActivity implements Serializable {
 
     public void load(Serra serra) {
 
-        TextView info_nome = findViewById(R.id.info_nome);
+        //TextView info_nome = findViewById(R.id.info_nome);
         EditText info_m2 = findViewById(R.id.info_m2);
         EditText info_coltura = findViewById(R.id.info_coltura);
         EditText info_varieta = findViewById(R.id.info_varieta);
@@ -117,7 +112,7 @@ public class Info extends AppCompatActivity implements Serializable {
         EditText info_uscita = findViewById(R.id.info_uscita);
         EditText info_ec = findViewById(R.id.info_ec);
 
-        info_nome.setText(serra.getSerra());
+        //info_nome.setText(serra.getSerra());
         info_m2.setText(serra.getM2());
         info_coltura.setText(serra.getColtura());
         info_varieta.setText(serra.getVarieta());
@@ -126,6 +121,21 @@ public class Info extends AppCompatActivity implements Serializable {
         info_uscita.setText(serra.LOoutToString());
         info_ec.setText(serra.TargetECToString());
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id) {
+
+            case R.id.item2:
+                Intent goToAddNewSerra = new Intent(this, aggiungi.class);
+                startActivity(goToAddNewSerra);
+                break;
+        }
+
+        return true;
     }
 
 }

@@ -38,7 +38,9 @@ public class DBadapter extends Thread{
     private static final String URL_PUTSERRA = "http://www.appidroponica.altervista.org/PutSerra.php ";
     private static final String URL_PUTRILEVAMENTO = "http://www.appidroponica.altervista.org/PutRilevamento.php ";
     private static final String URL_DELETERILEVAMENTO = "http://www.appidroponica.altervista.org/DeleteRilevamento.php ";
+    private static final String URL_DELETERILEVAMENTISERRA = "http://www.appidroponica.altervista.org/DeleteRilevamentiSerra.php ";
     private static final String URL_GETSERRA = "http://www.appidroponica.altervista.org/GetSerra.php ";
+    private static final String URL_DELETESERRA = "http://www.appidroponica.altervista.org/DeleteSerra.php ";
     private static final String URL_GETRILEVAMENTI = "http://www.appidroponica.altervista.org/GetRilevamenti.php ";
 
 
@@ -152,7 +154,7 @@ public class DBadapter extends Thread{
                         //adding the product to product list
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         Date trapianto = null;
-                        System.out.println ("stampa dioporco: "+(product.getString ("trapianto")));
+
                         try {
                             trapianto = sdf.parse(product.getString ("trapianto"));
                         } catch (ParseException e) {
@@ -342,5 +344,55 @@ public class DBadapter extends Thread{
 
         MyRequestQueue.add(MyStringRequest);
     }
+    public void DeleteSerra(Context context, final String ns){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
 
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, URL_DELETESERRA, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("VOLLEY OK", response);
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY NOT OK", error.toString());
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String> ();
+                MyData.put("serra",ns);
+
+                return MyData;
+            }
+        };
+
+
+        MyRequestQueue.add(MyStringRequest);
+    }
+
+    public void DeleteRilevamentiSerra(Context context, final String ns){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
+
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, URL_DELETERILEVAMENTISERRA, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("VOLLEY OK", response);
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY NOT OK", error.toString());
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String> ();
+                MyData.put("serra",ns);
+
+                return MyData;
+            }
+        };
+
+
+        MyRequestQueue.add(MyStringRequest);
+    }
 }

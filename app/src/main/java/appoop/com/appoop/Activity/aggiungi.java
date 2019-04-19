@@ -1,12 +1,15 @@
 package appoop.com.appoop.Activity;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 
@@ -19,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -38,12 +42,14 @@ import appoop.com.appoop.modelli.Rilevamento;
 import appoop.com.appoop.modelli.Serra;
 
 public class aggiungi extends AppCompatActivity implements View.OnClickListener, OnItemSelectedListener,Serializable {
-    ArrayList<String> nomiserre;
     public static Date data=null;
+    public static boolean isDateAggiungi=false;
     Serra serra;
+    ArrayList<String> nomiserre;
     Spinner spinner;
     Intent openInfo;
     DBadapter db;
+    static TextView info_data;
     public aggiungi() {
         serra=new Serra ();
 
@@ -54,13 +60,16 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_aggiungi);
+        info_data=findViewById (R.id.info_dataA);
+
         addListenerOnButtonClick();
         addListenerOnSpinnerItemSelection ();
+        loadNomiSerre ();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-        loadNomiSerre ();
-      
+
+
     }
 
     private void loadNomiSerre( ){
@@ -91,11 +100,11 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         return true;
     }
     public void addItemsOnSpinner(ArrayList ns){
-            spinner =  findViewById(R.id.spinner);
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ns);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(dataAdapter);
-     }
+        spinner =  findViewById(R.id.spinner);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ns);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+    }
     public void addListenerOnSpinnerItemSelection(){
         spinner =  findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener( this);
@@ -115,35 +124,44 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         EditText TLOout = findViewById(R.id.editText_LOout);
         EditText TEC = findViewById(R.id.editText_EC);
 
-        serra.setSerra (Tnome.getText().toString());
-        serra.setM2 ( Tm2.getText().toString());
-        serra.setColtura ( Tcoltura.getText().toString());
-        serra.setVarieta ( Tvarieta.getText().toString());
-        if(data==null){
-            String pattern = "dd/MM/yyyy";
-            DateFormat df = new SimpleDateFormat (pattern);
-            data= df.getCalendar ().getInstance().getTime();
-            System.out.println (""+data);
+        if(data==null||Tnome.getText().toString().length ()==0 ||Tm2.getText().toString().length ()==0 ||Tcoltura.getText().toString().length ()==0||
+                Tvarieta.getText().toString().length ()==0 ||Tvarieta.getText().toString().length ()==0 ||TLOin.getText().toString().length ()==0
+                ||TLOout.getText().toString().length ()==0||TEC.getText().toString().length ()==0){
+            new AlertDialog.Builder(aggiungi.this)
+                    .setTitle("Alcuni campi sono vuoti")
+                    .setMessage("E' necessario riempire tutti i campi")
+
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
 
         }
-        serra.setTrapianto (data);
-        serra.setLOentrata (Double.valueOf (TLOin.getText().toString()));
-        serra.setLOsgrondo (Double.valueOf (TLOout.getText().toString()));
-        serra.setTargetEC (Double.valueOf (TEC.getText().toString()));
-        db.PutSerra (this,serra);
-        ArrayList temp=new ArrayList ();
-        temp.add(serra.getSerra ());
-        addItemsOnSpinner (temp);
+        else{
+            serra.setSerra (Tnome.getText().toString());
+            serra.setM2 ( Tm2.getText().toString());
+            serra.setColtura ( Tcoltura.getText().toString());
+            serra.setVarieta ( Tvarieta.getText().toString());
+            serra.setTrapianto (data);
+            serra.setLOentrata (Double.valueOf (TLOin.getText().toString()));
+            serra.setLOsgrondo (Double.valueOf (TLOout.getText().toString()));
+            serra.setTargetEC (Double.valueOf (TEC.getText().toString()));
+            db.PutSerra (this,serra);
+            openInfo  = new Intent(aggiungi.this, Info.class);
+            openInfo.putExtra("nomeserra",serra.getSerra ());
+            Toast.makeText (aggiungi.this, "nuova serra "+serra.getSerra ()+" creata", Toast.LENGTH_SHORT).show ( );
+            startActivity (openInfo);
+        }
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment ();
+        isDateAggiungi=true;
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     public static void setData(String Sdata) {
         try {
-
+            info_data.setText (Sdata);
             DateFormat formatoData = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY);
             data = formatoData.parse(Sdata);
         } catch (ParseException e) {

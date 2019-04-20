@@ -285,6 +285,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
         nRenderer.setShowLegend(true);//elimina la parte inferiore permettendo al grafico di stare a tuttoschermo
         nRenderer.setXLabels(0); //nasconde le labels dell'asse x
         nRenderer.setInScroll(true);
+
         db.GetSerra (this,nomeserra,new VolleyCallback ( ) {
             @Override
             public void onSuccessGNS(ArrayList ns) {
@@ -313,7 +314,6 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
 
                     //se il periodo non è scelto dall'utente carichiamo la prima data disponibile
                     if (data == null) {
-                        System.out.println("Data è null");
 
                         String strIncipit = FORMAT.format(rilevamenti.get(0).data);
                         nRenderer.setXTitle("Il periodo selezionato parte dal" + strIncipit);
@@ -333,6 +333,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
                             }
                             else {
                                 double func = ((element.L_sgrondo / element.L_entrata) / (s.LOentrata / s.LOsgrondo));
+                                func = Math.floor(func*100.0)/100.0;
                                 nCurrentSeries.add(rilevamenti.indexOf(element), func);
                                 String strDate = FORMAT.format(element.getData());
                                 nRenderer.addXTextLabel(rilevamenti.indexOf(element), strDate);
@@ -379,6 +380,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener {
                             }
                             else {
                                 double func = ((element.L_sgrondo / element.L_entrata) / (s.LOentrata / s.LOsgrondo));
+                                func = Math.floor(func*100.0)/100.0;
                                 nCurrentSeries.add(rilevamenti.indexOf(element), func);
                                 String strDate = FORMAT.format(element.getData());
                                 nRenderer.addXTextLabel(rilevamenti.indexOf(element), strDate);

@@ -2,6 +2,7 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +16,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -24,7 +25,8 @@
             android:id="@+id/layout_verticale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="ExtraText">
 
 
             <TextView
@@ -38,7 +40,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
 
@@ -65,23 +67,46 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_bias="0.06" />
 
-            <Button
-                android:id="@+id/button_data"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:onClick="showDatePickerDialog"
-                android:text="inserisci data"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/info_nome"
-                app:layout_constraintVertical_bias="0.06"  />
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_data"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginEnd="0dp"
+
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="showDatePickerDialog"
+                    android:text="inserisci data"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/info_data"
+                    android:layout_width="160dp"
+                    android:layout_height="45dp"
+
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="10dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:text="@string/_00_00_00"
+
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+            </LinearLayout>
 
 
             <TextView
@@ -113,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="9dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:inputType="numberDecimal"
@@ -208,32 +233,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/info_data"
                 app:layout_constraintVertical_bias="0.048" />
 
-
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/button_crea"
-                android:layout_width="76dp"
-                android:layout_height="76dp"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="64dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:adjustViewBounds="false"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingBottom="0dp"
-                android:paddingEnd="0dp"
-                app:backgroundTint="?attr/actionModeSplitBackground"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.864"
-                app:srcCompat="@android:drawable/ic_menu_add" />
+            <Button
+                android:id="@+id/button_creaRil"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorPrimary"
+                android:text="crea nuovo rilevamento"
+                android:textAlignment="center"
+                android:textColor="@color/cardview_light_background" />
 
 
         </LinearLayout>
 
     </ScrollView>
+
+
 
 </android.support.constraint.ConstraintLayout>

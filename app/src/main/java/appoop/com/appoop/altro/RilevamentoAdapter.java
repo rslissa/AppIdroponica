@@ -76,9 +76,7 @@ public class RilevamentoAdapter extends RecyclerView.Adapter<RilevamentoAdapter.
         }
     }
 
-    public List<Rilevamento> getRilevamentoList() {
-        return rilevamentoList;
-    }
+
 }
 
 

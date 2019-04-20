@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import appoop.com.appoop.Activity.AddRilevamento;
+import appoop.com.appoop.Activity.Analisi;
 import appoop.com.appoop.Activity.aggiungi;
 
 
@@ -29,9 +30,20 @@ public  class DatePickerFragment extends DialogFragment   implements DatePickerD
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        month=month+1;
         String s=""+day+'/'+month+'/'+year;
-        aggiungi.setData(s);
-        AddRilevamento.setData (s);
+        if(aggiungi.isDateAggiungi){
+            aggiungi.isDateAggiungi=false;
+            aggiungi.setData(s);
+        }
+
+        if(AddRilevamento.isDateRilevamento){
+
+            AddRilevamento.isDateRilevamento=false;
+            AddRilevamento.setData (s);
+        }
+
+
     }
 
 }

@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_info"
-        android:icon="@drawable/ic_action_info"
+        android:icon="@drawable/icona_info"
         app:showAsAction="ifRoom"
         android:title="Info">
     </item>
     <item
         android:id="@+id/nav_reg"
-        android:icon="@drawable/ic_action_reg"
+        android:icon="@drawable/icona_registro"
         app:showAsAction="ifRoom"
         android:title="Registro">
     </item>
     <item
         android:id="@+id/nav_ana"
-        android:icon="@drawable/ic_action_ana"
+        android:icon="@drawable/icona_analisi"
         app:showAsAction="ifRoom"
         android:title="Analisi">
     </item>

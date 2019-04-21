@@ -39,10 +39,11 @@ public class DBadapter extends Thread{
     private static final String URL_PUTRILEVAMENTO = "http://www.appidroponica.altervista.org/PutRilevamento.php ";
     private static final String URL_DELETERILEVAMENTO = "http://www.appidroponica.altervista.org/DeleteRilevamento.php ";
     private static final String URL_DELETERILEVAMENTISERRA = "http://www.appidroponica.altervista.org/DeleteRilevamentiSerra.php ";
+    private static final String URL_MODIFYRILEVAMENTO = "http://www.appidroponica.altervista.org/ModifyRilevamento.php ";
     private static final String URL_GETSERRA = "http://www.appidroponica.altervista.org/GetSerra.php ";
     private static final String URL_DELETESERRA = "http://www.appidroponica.altervista.org/DeleteSerra.php ";
+    private static final String URL_MODIFYSERRA = "http://www.appidroponica.altervista.org/ModifySerra.php ";
     private static final String URL_GETRILEVAMENTI = "http://www.appidroponica.altervista.org/GetRilevamenti.php ";
-
 
 
 
@@ -369,7 +370,72 @@ public class DBadapter extends Thread{
 
         MyRequestQueue.add(MyStringRequest);
     }
+    public void ModifySerra(Context context, final Serra s, final String sv){
+        final Serra serra=s;
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
 
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, URL_MODIFYSERRA, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("VOLLEY OK", response);
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY NOT OK", error.toString());
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                formatter.format(serra.getTrapianto ());
+                Map<String, String> MyData = new HashMap<String, String> ();
+                MyData.put("serravecchia",sv);
+                MyData.put("nome",serra.getSerra ());
+                MyData.put("metriquadri", serra.getM2 ());
+                MyData.put("coltura",serra.getColtura ());
+                MyData.put("varieta",serra.getVarieta ());
+                MyData.put("trapianto",formatter.format(serra.getTrapianto ()));
+                MyData.put("LOentrata",serra.getLOentrata ().toString ());
+                MyData.put("LOsgrondo",serra.getLOsgrondo ().toString ());
+                MyData.put("TargetEC", serra.getTargetEC ().toString ());
+                return MyData;
+            }
+        };
+
+
+
+        MyRequestQueue.add(MyStringRequest);
+    }
+    public void ModifyRilevamento(Context context, final Rilevamento r){
+        final Rilevamento rilevamento=r;
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
+
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, URL_MODIFYRILEVAMENTO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("VOLLEY OK", response);
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("VOLLEY NOT OK", error.toString());
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                formatter.format(rilevamento.getData ());
+                Map<String, String> MyData = new HashMap<String, String> ();
+                MyData.put("serra",rilevamento.getSerra ());
+                MyData.put("data",formatter.format(rilevamento.getData ()));
+                MyData.put("Lentrata",rilevamento.L_entrataToString());
+                MyData.put("Lsgrondo",rilevamento.L_sgrondoToString());
+                MyData.put("ECsgrondo",rilevamento.EC_sgrondoToString());
+                return MyData;
+            }
+        };
+
+        MyRequestQueue.add(MyStringRequest);
+    }
     public void DeleteRilevamentiSerra(Context context, final String ns){
         RequestQueue MyRequestQueue = Volley.newRequestQueue(context);
 

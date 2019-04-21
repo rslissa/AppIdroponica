@@ -429,12 +429,31 @@
                     android:id="@+id/button_delete"
                     android:layout_width="333dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="200dp"
-                    android:text="Elimina Serra"
                     android:layout_gravity="center"
-                    android:textColor="@color/cardview_light_background"
+                    android:layout_marginBottom="8dp"
                     android:background="@color/colorPrimary"
-                    />
+                    android:text="Elimina Serra"
+                    android:textColor="@color/cardview_light_background" />
+
+                <Button
+                    android:id="@+id/button_modify"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Modifica Serra"
+                    android:textColor="@color/cardview_light_background" />
+
+                <Button
+                    android:id="@+id/button_delete_rilevamenti"
+                    android:layout_width="333dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="180dp"
+                    android:background="@color/colorPrimary"
+                    android:text="elimina rilevamenti"
+                    android:textColor="@color/cardview_light_background" />
 
 
             </LinearLayout>

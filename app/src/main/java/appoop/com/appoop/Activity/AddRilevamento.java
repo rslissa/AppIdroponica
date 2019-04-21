@@ -49,22 +49,8 @@ public class AddRilevamento extends AppCompatActivity implements View.OnClickLis
         info_data=findViewById (R.id.info_data);
         titolo = findViewById(R.id.textView11);
         addListenerOnButtonClick();
-        if(Registro.isModify==true){
-            Registro.isModify=false;
-            rilevamento=(Rilevamento)getIntent ().getSerializableExtra ("modifyrilevamento");
-            titolo.setText ("Modifica rilevamento "+rilevamento.getSerra ());
-            titolo.setTextSize(22);
-            Lentrata.setText (rilevamento.L_entrataToString ());
-            Luscita.setText (rilevamento.L_sgrondoToString ());
-            EC.setText (rilevamento.EC_sgrondoToString ());
-            info_data.setText (rilevamento.dataToString ());
-            button.setText ("modifica rilevamento");
-
-        }
-        else{
-            titolo.setText("Nuovo rilevamento" + " " + nomeserra);
-            titolo.setTextSize(22);
-        }
+        titolo.setText("Nuovo rilevamento" + " " + nomeserra);
+        titolo.setTextSize(22);
 
     }
     public void addListenerOnButtonClick(){
@@ -97,6 +83,7 @@ public class AddRilevamento extends AppCompatActivity implements View.OnClickLis
             System.out.println ("rilevamento ricevuto: "+rilevamento.toString ());
             openREG  = new Intent (AddRilevamento.this, Registro.class);
             openREG.putExtra ("nomeserra",nomeserra);
+            finish();
             startActivity (openREG);
         }
 

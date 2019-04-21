@@ -116,7 +116,7 @@ public class Serra implements Serializable {
     }
 
     public String TrapiantoToString(){
-        String pattern = "dd/MM/yyyy";
+        String pattern = "dd-MM-yyyy";
         DateFormat df = new SimpleDateFormat (pattern);
         return(df.format(getTrapianto ()));
     }
@@ -129,7 +129,5 @@ public class Serra implements Serializable {
     public String TargetECToString(){
         return(String.valueOf (getTargetEC ()));
     }
-
-
 
 }

@@ -11,6 +11,7 @@ import java.util.Date;
 
 import appoop.com.appoop.Activity.AddRilevamento;
 import appoop.com.appoop.Activity.Analisi;
+import appoop.com.appoop.Activity.ModifySerra;
 import appoop.com.appoop.Activity.aggiungi;
 
 
@@ -42,7 +43,10 @@ public  class DatePickerFragment extends DialogFragment   implements DatePickerD
             AddRilevamento.isDateRilevamento=false;
             AddRilevamento.setData (s);
         }
-
+        if(ModifySerra.isDateModify){
+            ModifySerra.isDateModify=false;
+            ModifySerra.setData(s);
+        }
 
     }
 

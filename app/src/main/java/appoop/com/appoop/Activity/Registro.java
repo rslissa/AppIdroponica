@@ -38,7 +38,6 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     private FloatingActionButton fab;
     private RecyclerView recycler;
     public RilevamentoAdapter rAdapter;
-    public static boolean isModify = false;
     String nomeserra;
     DBadapter db;
     Spinner spinner;
@@ -95,6 +94,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
             public void onClick(View view) {
                 Intent addriv = new Intent (getBaseContext ( ), AddRilevamento.class);
                 addriv.putExtra ("nomeserra", nomeserra);
+                finish();
                 startActivity (addriv);
 
             }
@@ -163,6 +163,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
                     case R.id.nav_info:
                         Intent openInfo = new Intent (Registro.this, Info.class);
                         openInfo.putExtra ("nomeserra", nomeserra);
+                        finish();
                         startActivity (openInfo);
                         break;
                     case R.id.nav_reg:
@@ -171,6 +172,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
                     case R.id.nav_ana:
                         Intent openAna = new Intent (Registro.this, Analisi.class);
                         openAna.putExtra ("nomeserra", nomeserra);
+                        finish();
                         startActivity (openAna);
                         break;
                 }
@@ -217,10 +219,9 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     public void modifyVoto(int pos) {
         ArrayList<Rilevamento> lr = new ArrayList (rAdapter.getRilevamentoList ( ));
         Rilevamento Modifyrilevamento = lr.get (pos);
-        db.DeleteRilevamento (this, Modifyrilevamento);
-        Intent addriv = new Intent (getBaseContext ( ), AddRilevamento.class);
-        addriv.putExtra ("nomeserra", nomeserra);
-        isModify = true;
+
+        Intent addriv = new Intent (Registro.this, ModifyRilevamento.class);
+
         addriv.putExtra ("modifyrilevamento", Modifyrilevamento);
         startActivity (addriv);
     }
@@ -233,6 +234,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
 
             case R.id.item2:
                 Intent goToAddNewSerra = new Intent (this, aggiungi.class);
+                finish();
                 startActivity (goToAddNewSerra);
                 break;
         }

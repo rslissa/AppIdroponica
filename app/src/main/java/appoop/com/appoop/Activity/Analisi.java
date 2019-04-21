@@ -203,6 +203,7 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener,A
         switch (id) {
             case R.id.item2:
                 Intent goToAddNewSerra = new Intent(this, aggiungi.class);
+                finish();
                 startActivity(goToAddNewSerra);
                 break;
         }
@@ -251,11 +252,13 @@ public class Analisi extends AppCompatActivity implements View.OnClickListener,A
                     case R.id.nav_info:
                         Intent openInfo = new Intent(Analisi.this, Info.class);
                         openInfo.putExtra("nomeserra", nomeserra);
+                        finish();
                         startActivity(openInfo);
                         break;
                     case R.id.nav_reg:
                         Intent openReg = new Intent(Analisi.this, Registro.class);
                         openReg.putExtra("nomeserra", nomeserra);
+                        finish();
                         startActivity(openReg);
                         break;
                     case R.id.nav_ana:

@@ -113,9 +113,10 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
         EditText TLOout = findViewById(R.id.editText_LOout);
         EditText TEC = findViewById(R.id.editText_EC);
 
-        if(data==null||Tnome.getText().toString().length ()==0 ||Tm2.getText().toString().length ()==0 ||Tcoltura.getText().toString().length ()==0||
-                Tvarieta.getText().toString().length ()==0 ||Tvarieta.getText().toString().length ()==0 ||TLOin.getText().toString().length ()==0
-                 ||TLOout.getText().toString().length ()==0||TEC.getText().toString().length ()==0){
+        if(data==null||Tnome.getText().toString().length ()==0 ||Tm2.getText().toString().length ()==0
+                ||Tcoltura.getText().toString().length ()==0||Tvarieta.getText().toString().length ()==0
+                ||TLOin.getText().toString().length ()==0
+                ||TLOout.getText().toString().length ()==0||TEC.getText().toString().length ()==0){
             new AlertDialog.Builder(aggiungi.this)
                     .setTitle("Alcuni campi sono vuoti")
                     .setMessage("E' necessario riempire tutti i campi")
@@ -138,6 +139,7 @@ public class aggiungi extends AppCompatActivity implements View.OnClickListener,
             openInfo  = new Intent(aggiungi.this, Info.class);
             openInfo.putExtra("nomeserra",serra.getSerra ());
             Toast.makeText (aggiungi.this, "nuova serra "+serra.getSerra ()+" creata", Toast.LENGTH_SHORT).show ( );
+            finish();
             startActivity (openInfo);
         }
     }

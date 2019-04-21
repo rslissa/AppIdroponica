@@ -38,6 +38,8 @@ public class Info extends AppCompatActivity implements Serializable, AdapterView
     Spinner spinner;
     String nomeserra;
     Button btnDelete;
+    Button btnModify;
+    Button btnDeleteRil;
     EditText info_m2;
     EditText info_coltura;
     EditText info_varieta;
@@ -95,7 +97,61 @@ public class Info extends AppCompatActivity implements Serializable, AdapterView
                                  db.DeleteSerra (Info.this,nomeserra);
                                  db.DeleteRilevamentiSerra (Info.this,nomeserra);
                                  Intent gotoaggiungi = new Intent(getBaseContext(), aggiungi.class);
+                                 finish();
                                  startActivity(gotoaggiungi);
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }
+        });
+        btnModify = findViewById(R.id.button_modify);
+        btnModify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                db.GetSerra (Info.this,nomeserra,new VolleyCallback ( ) {
+                    @Override
+                    public void onSuccessGNS(ArrayList ns) {
+                        //do nothing
+                    }
+
+                    @Override
+                    public void onSuccessGS(Serra s) {
+                        Intent gotoModify=new Intent (Info.this,ModifySerra.class);
+                        gotoModify.putExtra ("modifyserra",s);
+                        finish ();
+                        startActivity(gotoModify);
+                    }
+
+                    @Override
+                    public void onSuccessGR(ArrayList<Rilevamento> lr) {
+                        //do nothing
+                    }
+                });
+
+
+
+            }
+        });
+        btnDeleteRil = findViewById(R.id.button_delete_rilevamenti);
+        btnDeleteRil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(Info.this)
+                        .setTitle("Sei sicuro di voler continuare?")
+                        .setMessage(" tutti i rilevamenti associati a questa serra verranno eliminati in maniera definitiva")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.DeleteRilevamentiSerra (Info.this,nomeserra);
+                                Toast.makeText (Info.this, "tutti i rilevamenti della serra sono stati eliminati", Toast.LENGTH_SHORT).show ( );
                             }
                         })
 
@@ -204,6 +260,7 @@ public class Info extends AppCompatActivity implements Serializable, AdapterView
 
             case R.id.item2:
                 Intent goToAddNewSerra = new Intent(this, aggiungi.class);
+                finish();
                 startActivity(goToAddNewSerra);
                 break;
         }

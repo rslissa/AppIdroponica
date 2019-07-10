@@ -1,246 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".aggiungi"
-    tools:ignore="LabelFor">
+    android:id="@+id/AggiungiFrame"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="0dp"
+    android:padding="0dp"
+    tools:context=".Activity.aggiungi"
+    >
+    <include
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/toolbar"
+        />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="166dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="nuova serra"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="60dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.027"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.017" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="166dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="nuova serra"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/spinner"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollView4"
-        android:layout_width="0dp"
-        android:layout_height="580dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0">
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="serre"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView4"
+            android:layout_width="0dp"
+            android:layout_height="500dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.0">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="0dp"
+                    android:text="Serra:"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView5"
+                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                    app:layout_constraintStart_toStartOf="@+id/textView5" />
+
+                <EditText
+                    android:id="@+id/editText_nome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:ems="10"
+                    android:hint="Inserire il nome della serra"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toTopOf="@+id/editText7"
+                    app:layout_constraintStart_toStartOf="@+id/info_varieta" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="384dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginEnd="21dp"
+                    android:text="Metri quadri:"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@+id/info_coltura"
+                    app:layout_constraintEnd_toEndOf="@+id/textView8" />
+
+                <EditText
+                    android:id="@+id/editText_m2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginStart="0dp"
+                    android:ems="10"
+                    android:hint="Inserire metri quadri"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Coltura:"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView6"
+                    app:layout_constraintEnd_toEndOf="@+id/textView8"
+                    app:layout_constraintStart_toStartOf="@+id/textView8" />
+
+                <EditText
+                    android:id="@+id/editText3_coltura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:ems="10"
+                    android:hint="Specificare coltura"
+                    android:inputType="textPersonName"
+                    app:layout_constraintStart_toStartOf="@+id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/info_m2" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Varietà:"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/info_nome"
+                    app:layout_constraintStart_toStartOf="@+id/textView4"
+                    app:layout_constraintTop_toBottomOf="@+id/info_nome" />
+
+                <EditText
+                    android:id="@+id/editText4_varieta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:ems="10"
+                    android:hint="Specificare varietà"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data del trapianto:"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                    app:layout_constraintStart_toStartOf="@+id/textView5"
+                    app:layout_constraintTop_toTopOf="@+id/scrollView4" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button_dataA"
+                        android:layout_width="129dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/colorPrimary"
+                        android:onClick="showDatePickerDialog"
+                        android:text="inserisci data"
+                        android:textColor="@color/cardview_light_background" />
+
+                    <TextView
+                        android:id="@+id/info_dataA"
+                        android:layout_width="160dp"
+                        android:layout_height="45dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="10dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:inputType="none"
+                        android:text="@string/_00_00_00"
+                        android:textAlignment="center"
+                        android:textSize="30sp" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Coefficiente entrata:"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/registro_ec"
+                    app:layout_constraintTop_toTopOf="@+id/registro_ec" />
+
+                <EditText
+                    android:id="@+id/editText_LOin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:ems="10"
+                    android:hint="Inserire coefficiente L/O in entrata"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/registro_ec" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Coefficiente sgrondo:"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/editText7"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <EditText
+                    android:id="@+id/editText_LOout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:ems="10"
+                    android:hint="Inserire coefficiente L/O sgrondo"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintBottom_toTopOf="@+id/registro_ec"
+                    app:layout_constraintStart_toStartOf="@+id/textView9" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Target EC:"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/registro_ec"
+                    app:layout_constraintStart_toStartOf="@+id/registro_ec" />
+
+                <EditText
+                    android:id="@+id/editText_EC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:ems="10"
+                    android:hint="Inserire target EC"
+                    android:inputType="numberDecimal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/editText7"
+                    app:layout_constraintStart_toStartOf="@+id/editText7" />
+
+
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button_crea"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/cardview_light_background"
+            android:text="crea nuova serra"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="0dp"
-                android:text="serra"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView5"
-                app:layout_constraintEnd_toStartOf="@+id/textView5"
-                app:layout_constraintStart_toStartOf="@+id/textView5" />
-
-            <EditText
-                android:id="@+id/editText_nome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="nome serra"
-                app:layout_constraintBottom_toTopOf="@+id/editText7"
-                app:layout_constraintStart_toStartOf="@+id/info_varieta" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="384dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_marginEnd="21dp"
-                android:text="metri quadri"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/info_coltura"
-                app:layout_constraintEnd_toEndOf="@+id/textView8" />
-
-            <EditText
-                android:id="@+id/editText_m2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="0dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="0"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="coltura"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView6"
-                app:layout_constraintEnd_toEndOf="@+id/textView8"
-                app:layout_constraintStart_toStartOf="@+id/textView8" />
-
-            <EditText
-                android:id="@+id/editText3_coltura"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="non specificata"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/info_m2" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="varietà"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/info_nome"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/info_nome" />
-
-            <EditText
-                android:id="@+id/editText4_varieta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="non specificata"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="trapianto"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/textView5"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toTopOf="@+id/scrollView4" />
-
-            <Button
-                android:id="@+id/button_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:onClick="showDatePickerDialog"
-                android:text="inserisci data" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="litri ora entrata"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/registro_ec"
-                app:layout_constraintTop_toTopOf="@+id/registro_ec" />
-
-            <EditText
-                android:id="@+id/editText_LOin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/registro_ec" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="litri ora sgrondo"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/editText7"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-            <EditText
-                android:id="@+id/editText_LOout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="1"
-                app:layout_constraintBottom_toTopOf="@+id/registro_ec"
-                app:layout_constraintStart_toStartOf="@+id/textView9" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="targetEC"
-                android:textSize="18sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/registro_ec"
-                app:layout_constraintStart_toStartOf="@+id/registro_ec" />
-
-            <EditText
-                android:id="@+id/editText_EC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/editText7"
-                app:layout_constraintStart_toStartOf="@+id/editText7" />
-
-            <Button
-                android:id="@+id/button_crea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="crea nuova serra"
-                tools:layout_editor_absoluteX="161dp"
-                tools:layout_editor_absoluteY="505dp" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

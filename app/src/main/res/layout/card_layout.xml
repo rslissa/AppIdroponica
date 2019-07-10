@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:background="?android:selectableItemBackground"
+    card_view:cardCornerRadius="0dp">-->
+
+    <RelativeLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true">
+
+
+        <TextView
+            android:id="@+id/showData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView12"
+            android:gravity="center_vertical"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/showL_entrata"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView13"
+            android:gravity="left|bottom"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/showL_sgrondo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/showL_entrata"
+            android:layout_toEndOf="@+id/showL_entrata"
+            android:gravity="left|bottom"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/showEC_sgrondo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/showL_entrata"
+            android:layout_toEndOf="@+id/showL_sgrondo"
+            android:gravity="left|bottom"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Data" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/showData"
+            android:text="Litri entrata" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView13"
+            android:layout_toEndOf="@+id/textView13"
+            android:text="Litri Sgrondo" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView13"
+            android:layout_toEndOf="@+id/textView14"
+            android:text="EC sgrondo" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
